@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	root                  = "gs.cloudevents"
+	root                  = "serverless.cloudevents"
 	ExtRoot               = root + ".ext"
 	handleDiscardEventsID = root + ".handle.discard.ids"
 )

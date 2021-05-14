@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	root = "gs.cmd"
+	root = "serverless.cmd"
 	def  = root + ".default"
 )
 

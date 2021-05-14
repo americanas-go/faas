@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	root          = "gs.repository"
+	root          = "serverless.repository"
 	eventRoot     = root + ".event"
 	eventProvider = eventRoot + ".provider"
 )

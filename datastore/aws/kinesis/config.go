@@ -5,8 +5,8 @@ import (
 )
 
 const (
-	root               = "gostack.provider.kinesis"
-	randomPartitionKey = root + ".randompartitionkey"
+	root               = "serverless.provider.kinesis"
+	randomPartitionKey = root + ".randomPartitionKey"
 )
 
 func init() {

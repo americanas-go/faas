@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	root = "gs.lambda"
+	root = "serverless.lambda"
 	skip = root + ".skip"
 )
 
