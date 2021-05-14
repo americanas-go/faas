@@ -1,0 +1,7 @@
+*.iml
+.DS_Store
+.idea/
+Godeps/_workspace/
+gen/
+.vscode/
+vendor/
