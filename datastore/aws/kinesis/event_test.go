@@ -5,9 +5,9 @@ import (
 	"testing"
 
 	"github.com/americanas-go/config"
+	"github.com/americanas-go/faas/repository"
 	"github.com/americanas-go/ignite/aws/aws-sdk-go.v2/client/kinesis/mocks"
 	"github.com/americanas-go/ignite/sirupsen/logrus.v1"
-	"github.com/americanas-go/serverless/repository"
 	"github.com/stretchr/testify/suite"
 )
 

@@ -1,8 +1,8 @@
 package sns
 
 import (
+	"github.com/americanas-go/faas/repository"
 	"github.com/americanas-go/ignite/aws/aws-sdk-go.v2/client/sns"
-	"github.com/americanas-go/serverless/repository"
 )
 
 // NewEvent returns a initialized client

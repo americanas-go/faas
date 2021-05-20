@@ -3,9 +3,9 @@ package nats
 import (
 	"sync"
 
+	"github.com/americanas-go/faas/cloudevents"
 	"github.com/americanas-go/ignite/go.uber.org/fx.v1/module/context"
 	ginatsfx "github.com/americanas-go/ignite/go.uber.org/fx.v1/module/nats-io/nats.go.v1"
-	"github.com/americanas-go/serverless/cloudevents"
 	"go.uber.org/fx"
 )
 

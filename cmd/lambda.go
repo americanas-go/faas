@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	gsfx "github.com/americanas-go/serverless/fx"
-	"github.com/americanas-go/serverless/lambda"
+	gsfx "github.com/americanas-go/faas/fx"
+	"github.com/americanas-go/faas/lambda"
 	co "github.com/spf13/cobra"
 	"go.uber.org/fx"
 )

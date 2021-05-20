@@ -5,7 +5,7 @@ package mocks
 import (
 	context "context"
 
-	"github.com/americanas-go/serverless/cloudevents"
+	"github.com/americanas-go/faas/cloudevents"
 	event "github.com/cloudevents/sdk-go/v2/event"
 
 	mock "github.com/stretchr/testify/mock"

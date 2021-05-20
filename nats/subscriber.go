@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 
 	"github.com/americanas-go/errors"
+	"github.com/americanas-go/faas/cloudevents"
 	"github.com/americanas-go/ignite/nats-io/nats.go.v1"
 	"github.com/americanas-go/log"
-	"github.com/americanas-go/serverless/cloudevents"
 	"github.com/cloudevents/sdk-go/v2/event"
 	n "github.com/nats-io/nats.go"
 )

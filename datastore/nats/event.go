@@ -3,8 +3,8 @@ package nats
 import (
 	"context"
 
+	"github.com/americanas-go/faas/repository"
 	ginats "github.com/americanas-go/ignite/nats-io/nats.go.v1"
-	"github.com/americanas-go/serverless/repository"
 )
 
 // NewEvent returns a initialized client

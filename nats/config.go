@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	root     = "gs.nats"
+	root     = "serverless.nats"
 	subjects = root + ".subjects"
 	queue    = root + ".queue"
 )

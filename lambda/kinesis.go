@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 
 	"github.com/americanas-go/errors"
+	"github.com/americanas-go/faas/cloudevents"
 	"github.com/americanas-go/log"
-	"github.com/americanas-go/serverless/cloudevents"
 	"github.com/aws/aws-lambda-go/lambdacontext"
 	v2 "github.com/cloudevents/sdk-go/v2"
 )

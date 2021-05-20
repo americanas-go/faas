@@ -3,8 +3,8 @@ package newrelic
 import (
 	"context"
 
+	"github.com/americanas-go/faas/cloudevents"
 	newrelic "github.com/americanas-go/ignite/newrelic/go-agent.v3"
-	"github.com/americanas-go/serverless/cloudevents"
 	v2 "github.com/cloudevents/sdk-go/v2"
 	nr "github.com/newrelic/go-agent/v3/newrelic"
 )
