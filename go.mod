@@ -1,4 +1,4 @@
-module github.com/americanas-go/serverless
+module github.com/americanas-go/faas
 
 go 1.16
 
