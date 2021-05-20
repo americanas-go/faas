@@ -3,8 +3,8 @@ package lambda
 import (
 	"sync"
 
+	"github.com/americanas-go/faas/cloudevents"
 	contextfx "github.com/americanas-go/ignite/go.uber.org/fx.v1/module/context"
-	"github.com/americanas-go/serverless/cloudevents"
 	"go.uber.org/fx"
 )
 

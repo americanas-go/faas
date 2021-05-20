@@ -2,7 +2,7 @@ package logger
 
 import (
 	"github.com/americanas-go/config"
-	"github.com/americanas-go/serverless/cloudevents"
+	"github.com/americanas-go/faas/cloudevents"
 )
 
 const (

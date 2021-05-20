@@ -6,10 +6,10 @@ import (
 	"fmt"
 
 	"github.com/americanas-go/errors"
+	"github.com/americanas-go/faas/util"
 	giaws "github.com/americanas-go/ignite/aws/aws-sdk-go.v2"
 	"github.com/americanas-go/ignite/aws/aws-sdk-go.v2/client/sqs"
 	"github.com/americanas-go/log"
-	"github.com/americanas-go/serverless/util"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	awssqs "github.com/aws/aws-sdk-go-v2/service/sqs"
 	v2 "github.com/cloudevents/sdk-go/v2"

@@ -4,11 +4,11 @@ import (
 	"context"
 
 	"github.com/americanas-go/config"
+	"github.com/americanas-go/faas/cloudevents"
+	"github.com/americanas-go/faas/cloudevents/plugins/logger"
+	"github.com/americanas-go/faas/cmd"
 	ilog "github.com/americanas-go/ignite/americanas-go/log.v1"
 	gice "github.com/americanas-go/ignite/cloudevents/sdk-go.v2"
-	"github.com/americanas-go/serverless/cloudevents"
-	"github.com/americanas-go/serverless/cloudevents/plugins/logger"
-	"github.com/americanas-go/serverless/cmd"
 	v2 "github.com/cloudevents/sdk-go/v2"
 	"go.uber.org/fx"
 )

@@ -3,7 +3,7 @@ package lambda
 import (
 	"log"
 
-	"github.com/americanas-go/serverless/cloudevents"
+	"github.com/americanas-go/faas/cloudevents"
 	"github.com/aws/aws-lambda-go/lambda"
 )
 

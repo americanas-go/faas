@@ -3,9 +3,9 @@ package nats
 import (
 	"context"
 
+	"github.com/americanas-go/faas/cloudevents"
 	"github.com/americanas-go/ignite/nats-io/nats.go.v1"
 	"github.com/americanas-go/log"
-	"github.com/americanas-go/serverless/cloudevents"
 )
 
 type Helper struct {

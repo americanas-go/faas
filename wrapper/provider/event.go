@@ -4,7 +4,7 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/americanas-go/serverless/repository"
+	"github.com/americanas-go/faas/repository"
 	v2 "github.com/cloudevents/sdk-go/v2"
 	"github.com/newrelic/go-agent/v3/newrelic"
 )
