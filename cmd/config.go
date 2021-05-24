@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	root = "serverless.cmd"
+	root = "faas.cmd"
 	def  = root + ".default"
 )
 

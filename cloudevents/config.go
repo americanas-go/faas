@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	root                  = "serverless.cloudevents"
+	root                  = "faas.cloudevents"
 	ExtRoot               = root + ".ext"
 	handleDiscardEventsID = root + ".handle.discard.ids"
 )

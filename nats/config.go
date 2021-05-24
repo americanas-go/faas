@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	root     = "serverless.nats"
+	root     = "faas.nats"
 	subjects = root + ".subjects"
 	queue    = root + ".queue"
 )
