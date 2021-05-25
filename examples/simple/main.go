@@ -6,6 +6,7 @@ import (
 
 	"github.com/americanas-go/config"
 	"github.com/americanas-go/faas/cloudevents"
+	"github.com/americanas-go/faas/cloudevents/plugins/contrib/americanas-go/log.v1"
 	"github.com/americanas-go/faas/cmd"
 	ilog "github.com/americanas-go/ignite/americanas-go/log.v1"
 	gice "github.com/americanas-go/ignite/cloudevents/sdk-go.v2"
@@ -26,7 +27,7 @@ func main() {
 			},
 			func() []cloudevents.Middleware {
 				return []cloudevents.Middleware{
-					log_v1.NewLogger(),
+					log.NewLogger(),
 				}
 			},
 		),
