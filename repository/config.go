@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	root          = "serverless.repository"
+	root          = "faas.repository"
 	eventRoot     = root + ".event"
 	eventProvider = eventRoot + ".provider"
 )

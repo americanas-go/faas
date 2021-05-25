@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	root               = "serverless.provider.kinesis"
+	root               = "faas.provider.kinesis"
 	randomPartitionKey = root + ".randomPartitionKey"
 )
 

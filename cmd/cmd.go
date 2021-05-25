@@ -19,8 +19,8 @@ func Run(options fx.Option, c ...CmdFunc) error {
 	}
 
 	rootCmd := &co.Command{
-		Use:   "gostack",
-		Short: "gostack",
+		Use:   "faas",
+		Short: "faas",
 		Long:  "",
 	}
 

@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	root = "serverless.lambda"
+	root = "faas.lambda"
 	skip = root + ".skip"
 )
 
