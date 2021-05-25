@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
+	"os"
 
 	"github.com/americanas-go/config"
 	"github.com/americanas-go/faas/cloudevents"
-	"github.com/americanas-go/faas/cloudevents/plugins/logger"
 	"github.com/americanas-go/faas/cmd"
 	ilog "github.com/americanas-go/ignite/americanas-go/log.v1"
 	gice "github.com/americanas-go/ignite/cloudevents/sdk-go.v2"
@@ -26,28 +26,31 @@ func main() {
 			},
 			func() []cloudevents.Middleware {
 				return []cloudevents.Middleware{
-					logger.NewLogger(),
+					log_v1.NewLogger(),
 				}
 			},
 		),
 	)
+
+	// sets env var
+	os.Setenv("FAAS_CMD_DEFAULT", "nats")
 
 	// go run main.go help
 	err := cmd.Run(options,
 
 		// go run main.go nats
 		// or
-		// SERVERLESS_CMD_DEFAULT=nats go run main.go
+		// FAAS_CMD_DEFAULT=nats go run main.go
 		cmd.NewNats(),
 
 		// go run main.go cloudevents
 		// or
-		// SERVERLESS_CMD_DEFAULT=cloudevents go run main.go
+		// FAAS_CMD_DEFAULT=cloudevents go run main.go
 		cmd.NewCloudEvents(),
 
 		// go run main.go lambda
 		// or
-		// SERVERLESS_CMD_DEFAULT=lambda go run main.go
+		// FAAS_CMD_DEFAULT=lambda go run main.go
 		cmd.NewLambda(),
 	)
 
