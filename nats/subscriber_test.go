@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/americanas-go/config"
+	iglog "github.com/americanas-go/ignite/americanas-go/log.v1"
 	"github.com/americanas-go/ignite/nats-io/nats.go.v1"
-	"github.com/americanas-go/ignite/sirupsen/logrus.v1"
 	v2 "github.com/cloudevents/sdk-go/v2"
 
 	"github.com/nats-io/gnatsd/server"
@@ -38,8 +38,7 @@ func runServerWithOptions(opts *server.Options) *server.Server {
 func TestSubscriberListenerSubscribe(t *testing.T) {
 
 	config.Load()
-	logrus.NewLogger()
-
+	iglog.New()
 	var err error
 	var options *nats.Options
 
@@ -48,16 +47,16 @@ func TestSubscriberListenerSubscribe(t *testing.T) {
 
 	sUrl := fmt.Sprintf("nats://127.0.0.1:%d", TestPort)
 
-	options, err = nats.DefaultOptions()
+	options, err = nats.NewOptions()
 	assert.Nil(t, err)
 
 	options.Url = sUrl
 
-	conn, err := nats.NewConnection(context.Background(), options)
+	conn, err := nats.NewConn(context.Background())
 	assert.Nil(t, err)
 	defer conn.Close()
 
-	q, err := nats.NewSubscriber(context.Background(), options)
+	q, err := nats.NewSubscriberWithOptions(context.Background(), options)
 	assert.Nil(t, err)
 
 	lis := NewSubscriberListener(q, nil, "subject", "queue")

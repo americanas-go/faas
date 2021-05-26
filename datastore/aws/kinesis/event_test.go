@@ -6,8 +6,8 @@ import (
 
 	"github.com/americanas-go/config"
 	"github.com/americanas-go/faas/repository"
+	iglog "github.com/americanas-go/ignite/americanas-go/log.v1"
 	"github.com/americanas-go/ignite/aws/aws-sdk-go.v2/client/kinesis/mocks"
-	"github.com/americanas-go/ignite/sirupsen/logrus.v1"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -17,7 +17,7 @@ type EventSuite struct {
 
 func (s *EventSuite) SetupSuite() {
 	config.Load()
-	logrus.NewLogger()
+	iglog.New()
 }
 
 func (s *EventSuite) TestNewEvent() {
