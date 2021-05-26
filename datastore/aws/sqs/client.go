@@ -7,7 +7,6 @@ import (
 
 	"github.com/americanas-go/errors"
 	"github.com/americanas-go/faas/util"
-	giaws "github.com/americanas-go/ignite/aws/aws-sdk-go.v2"
 	"github.com/americanas-go/ignite/aws/aws-sdk-go.v2/client/sqs"
 	"github.com/americanas-go/log"
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -45,8 +44,10 @@ func (p *Client) Publish(ctx context.Context, events []*v2.Event) error {
 //GetURL gets URL based on default aws configs, resource name and service as the pattern:
 //  https://\<service\>.\<region\>.amazonaws.com/\<account_number\>/\<resource_name\>
 func (p *Client) getAwsUrl(resourceName, service string) string {
-	region := giaws.Region()
-	accountNumber := giaws.AccountNumber()
+	//FIXME reference to fix this up: https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/go/example_code/sqs/sqs_getqueueurl.go
+	//TODO move to ignite sqs client
+	region := "fixme"        //giaws.Region()
+	accountNumber := "fixme" //giaws.AccountNumber()
 	return fmt.Sprintf("https://%s.%s.amazonaws.com/%s/%s", service, region, accountNumber, resourceName)
 }
 

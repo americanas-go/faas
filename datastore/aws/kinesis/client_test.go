@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/americanas-go/config"
+	iglog "github.com/americanas-go/ignite/americanas-go/log.v1"
 	"github.com/americanas-go/ignite/aws/aws-sdk-go.v2/client/kinesis/mocks"
-	"github.com/americanas-go/ignite/sirupsen/logrus.v1"
 	v2 "github.com/cloudevents/sdk-go/v2"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
@@ -19,7 +19,7 @@ type ClientSuite struct {
 
 func (s *ClientSuite) SetupSuite() {
 	config.Load()
-	logrus.NewLogger()
+	iglog.New()
 }
 
 func (s *ClientSuite) TestClient_Publish() {
