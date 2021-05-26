@@ -5,7 +5,7 @@ go 1.16
 require (
 	github.com/americanas-go/config v1.1.0
 	github.com/americanas-go/errors v1.0.0
-	github.com/americanas-go/ignite v1.0.0-alpha-9
+	github.com/americanas-go/ignite v1.0.0-alpha-11
 	github.com/americanas-go/log v1.3.0
 	github.com/americanas-go/utils v1.0.0
 	github.com/aws/aws-lambda-go v1.13.3
