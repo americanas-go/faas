@@ -5,8 +5,8 @@ import (
 	"io/ioutil"
 
 	"github.com/americanas-go/config"
+	iglog "github.com/americanas-go/ignite/americanas-go/log.v1"
 	ginats "github.com/americanas-go/ignite/nats-io/nats.go.v1"
-	"github.com/americanas-go/ignite/sirupsen/logrus.v1"
 	"github.com/americanas-go/log"
 	"github.com/nats-io/nats.go"
 )
@@ -14,13 +14,12 @@ import (
 func main() {
 
 	config.Load()
-
-	logrus.NewLogger()
+	iglog.New()
 
 	var err error
 	var conn *nats.Conn
 
-	conn, err = ginats.NewDefaultConnection(context.Background())
+	conn, err = ginats.NewConn(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}

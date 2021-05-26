@@ -9,7 +9,7 @@ import (
 
 	"github.com/americanas-go/config"
 	"github.com/americanas-go/faas/cloudevents"
-	"github.com/americanas-go/faas/cloudevents/plugins/logger"
+	"github.com/americanas-go/faas/cloudevents/plugins/contrib/americanas-go/log.v1"
 	"github.com/americanas-go/faas/mocks"
 	"github.com/americanas-go/ignite/sirupsen/logrus.v1"
 	"github.com/americanas-go/log"
@@ -45,7 +45,7 @@ func (s *HandlerSuite) TestHandler_Handle() {
 
 	var middlewares []cloudevents.Middleware
 
-	middlewares = append(middlewares, logger.NewLogger())
+	middlewares = append(middlewares, log_v1.NewLogger())
 
 	options, _ := DefaultOptions()
 

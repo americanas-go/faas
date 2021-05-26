@@ -9,6 +9,6 @@ import (
 
 // NewEvent returns a initialized client
 func NewEvent(ctx context.Context) repository.Event {
-	publisher, _ := ginats.NewDefaultPublisher(ctx)
+	publisher, _ := ginats.NewPublisher(ctx)
 	return NewClient(publisher)
 }
