@@ -7,6 +7,7 @@ import (
 	"github.com/americanas-go/faas/datastore/aws/sns"
 	"github.com/americanas-go/faas/datastore/aws/sqs"
 	"github.com/americanas-go/faas/datastore/nats"
+	"github.com/americanas-go/log"
 	"go.uber.org/fx"
 )
 
@@ -19,10 +20,11 @@ func EventModule() fx.Option {
 	eventOnce.Do(func() {
 
 		value := EventProviderValue()
-
+		log.Debugf("Loading event provider %s", value)
 		switch value {
 		case "kinesis":
 			options = kinesis.Module()
+
 		case "sns":
 			options = sns.Module()
 		case "sqs":
