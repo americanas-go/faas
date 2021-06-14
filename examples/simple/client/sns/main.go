@@ -28,9 +28,11 @@ func main() {
 	ctx := context.Background()
 
 	awsConfig := igaws.NewConfig(ctx)
-	// if you have already set aws credentials in your system environment variables, ignore the two lines below
+	// if you have already set aws credentials in your system environment variables,
+	// ignore the two lines below
 	awsConfig.Region = "YOUR_AWS_REGION"
-	awsConfig.Credentials = credentials.NewStaticCredentialsProvider("YOUR_AWS_ACCESS_KEY_ID", "YOUR_AWS_SECRET_ACCESS_KEY", "")
+	awsConfig.Credentials = credentials.
+		NewStaticCredentialsProvider("YOUR_AWS_ACCESS_KEY_ID", "YOUR_AWS_SECRET_ACCESS_KEY", "")
 
 	client := sns.NewFromConfig(awsConfig)
 
