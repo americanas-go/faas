@@ -14,8 +14,8 @@ func NewLambda() CmdFunc {
 			Use:   "lambda",
 			Short: "lambda",
 			Long:  "",
-			Run: func(CmdFunc *co.Command, args []string) {
-				gsfx.Run(lambda.HelperModule(options))
+			RunE: func(CmdFunc *co.Command, args []string) error {
+				return gsfx.Run(lambda.HelperModule(options))
 			},
 		}
 	}

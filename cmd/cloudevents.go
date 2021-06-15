@@ -13,8 +13,8 @@ func NewCloudEvents() CmdFunc {
 			Use:   "cloudevents",
 			Short: "cloudevents",
 			Long:  "",
-			Run: func(cmd *co.Command, args []string) {
-				gsfx.Run(cloudevents.HelperModule(options))
+			RunE: func(cmd *co.Command, args []string) error {
+				return gsfx.Run(cloudevents.HelperModule(options))
 			},
 		}
 	}

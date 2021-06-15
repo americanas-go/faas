@@ -13,8 +13,8 @@ func NewNats() CmdFunc {
 			Use:   "nats",
 			Short: "nats",
 			Long:  "",
-			Run: func(CmdFunc *co.Command, args []string) {
-				gsfx.Run(nats.HelperModule(options))
+			RunE: func(CmdFunc *co.Command, args []string) error {
+				return gsfx.Run(nats.HelperModule(options))
 			},
 		}
 	}

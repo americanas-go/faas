@@ -5,6 +5,11 @@ import (
 	"go.uber.org/fx"
 )
 
-func Run(options fx.Option) {
-	gifx.NewApp(options).Run()
+func Run(options fx.Option) error {
+	app := gifx.NewApp(options)
+	if app.Err() != nil {
+		return app.Err()
+	}
+	app.Run()
+	return nil
 }

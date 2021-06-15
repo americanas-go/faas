@@ -52,10 +52,6 @@ func TestSubscriberListenerSubscribe(t *testing.T) {
 
 	options.Url = sUrl
 
-	conn, err := nats.NewConn(context.Background())
-	assert.Nil(t, err)
-	defer conn.Close()
-
 	q, err := nats.NewSubscriberWithOptions(context.Background(), options)
 	assert.Nil(t, err)
 
