@@ -7,6 +7,7 @@ import (
 	"go.uber.org/fx"
 )
 
+// NewNats returns CmdFunc for nats command.
 func NewNats() CmdFunc {
 	return func(options fx.Option) *co.Command {
 		return &co.Command{
