@@ -17,6 +17,7 @@ import (
 	"github.com/matryer/try"
 )
 
+// Client represents a kinesis client.
 type Client struct {
 	client  kinesis.Client
 	options *Options
