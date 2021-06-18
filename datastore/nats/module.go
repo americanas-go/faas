@@ -9,6 +9,9 @@ import (
 
 var once sync.Once
 
+// Module loads the NATS module providing an initialized client.
+//
+// The module is only loaded once.
 func Module() fx.Option {
 	options := fx.Options()
 

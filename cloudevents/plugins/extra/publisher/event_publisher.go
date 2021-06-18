@@ -12,11 +12,13 @@ import (
 	"github.com/google/uuid"
 )
 
+// EventPublisher represents an event publisher middleware.
 type EventPublisher struct {
 	cloudevents.UnimplementedMiddleware
 	events repository.Event
 }
 
+// NewEventPublisher creates an event publisher middleware.
 func NewEventPublisher(events *provider.EventWrapperProvider) cloudevents.Middleware {
 	if !IsEnabled() {
 		return nil
@@ -24,6 +26,7 @@ func NewEventPublisher(events *provider.EventWrapperProvider) cloudevents.Middle
 	return &EventPublisher{events: events}
 }
 
+// AfterAll publishes all output events after processing all handlers.
 func (p *EventPublisher) AfterAll(ctx context.Context, inouts []*cloudevents.InOut) (context.Context, error) {
 
 	logger := log.FromContext(ctx).WithTypeOf(*p)

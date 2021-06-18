@@ -14,6 +14,7 @@ func init() {
 	config.Add(enabled, true, "enable/disable publisher middleware")
 }
 
+// IsEnabled reports whether publisher middleware is enabled in the configuration.
 func IsEnabled() bool {
 	return config.Bool(enabled)
 }
