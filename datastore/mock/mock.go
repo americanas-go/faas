@@ -6,8 +6,7 @@ import (
 	v2 "github.com/cloudevents/sdk-go/v2"
 )
 
-type mock struct {
-}
+type mock struct{}
 
 // NewMock creates a fake event repository implementation for testing purposes.
 func NewMock() *mock {
