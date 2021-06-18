@@ -16,14 +16,17 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
+// Client represents a sqs client.
 type Client struct {
 	client sqs.Client
 }
 
+// NewClient creates a new sqs client.
 func NewClient(c sqs.Client) *Client {
 	return &Client{client: c}
 }
 
+// Publish publishes an event slice.
 func (p *Client) Publish(ctx context.Context, events []*v2.Event) error {
 
 	logger := log.FromContext(ctx).WithTypeOf(*p)
@@ -41,8 +44,8 @@ func (p *Client) Publish(ctx context.Context, events []*v2.Event) error {
 	return nil
 }
 
-//GetURL gets URL based on default aws configs, resource name and service as the pattern:
-//  https://\<service\>.\<region\>.amazonaws.com/\<account_number\>/\<resource_name\>
+// GetURL gets URL based on default aws configs, resource name and service as the pattern:
+// https://\<service\>.\<region\>.amazonaws.com/\<account_number\>/\<resource_name\>
 func (p *Client) getAwsUrl(resourceName, service string) string {
 	//FIXME reference to fix this up: https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/go/example_code/sqs/sqs_getqueueurl.go
 	//TODO move to ignite sqs client

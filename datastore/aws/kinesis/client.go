@@ -23,10 +23,12 @@ type Client struct {
 	options *Options
 }
 
+// NewClient creates a new kinesis client.
 func NewClient(c kinesis.Client, options *Options) *Client {
 	return &Client{client: c, options: options}
 }
 
+// Publish publishes one or multiple events.
 func (p *Client) Publish(ctx context.Context, outs []*v2.Event) (err error) {
 
 	logger := log.FromContext(ctx).WithTypeOf(*p)
