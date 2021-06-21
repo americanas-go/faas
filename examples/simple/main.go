@@ -9,7 +9,7 @@ import (
 	"github.com/americanas-go/faas/cloudevents/plugins/contrib/americanas-go/log.v1"
 	"github.com/americanas-go/faas/cmd"
 	ilog "github.com/americanas-go/ignite/americanas-go/log.v1"
-	gice "github.com/americanas-go/ignite/cloudevents/sdk-go.v2"
+	igce "github.com/americanas-go/ignite/cloudevents/sdk-go.v2"
 	v2 "github.com/cloudevents/sdk-go/v2"
 	"go.uber.org/fx"
 )
@@ -22,7 +22,7 @@ func main() {
 
 	options := fx.Options(
 		fx.Provide(
-			func() gice.Handler {
+			func() igce.Handler {
 				return Handle
 			},
 			func() []cloudevents.Middleware {
@@ -58,7 +58,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
 }
 
 func Handle(ctx context.Context, in v2.Event) (*v2.Event, error) {

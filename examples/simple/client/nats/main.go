@@ -6,7 +6,7 @@ import (
 
 	"github.com/americanas-go/config"
 	iglog "github.com/americanas-go/ignite/americanas-go/log.v1"
-	ginats "github.com/americanas-go/ignite/nats-io/nats.go.v1"
+	ignats "github.com/americanas-go/ignite/nats-io/nats.go.v1"
 	"github.com/americanas-go/log"
 	"github.com/nats-io/nats.go"
 )
@@ -19,7 +19,7 @@ func main() {
 	var err error
 	var conn *nats.Conn
 
-	conn, err = ginats.NewConn(context.Background())
+	conn, err = ignats.NewConn(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -29,7 +29,7 @@ func main() {
 	subject := "changeme"
 
 	var b []byte
-	b, err = ioutil.ReadFile("examples/simple/client/example.json")
+	b, err = ioutil.ReadFile("examples/simple/client/example-nats.json")
 	if err != nil {
 		log.Fatal(err)
 	}
