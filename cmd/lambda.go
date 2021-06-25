@@ -7,6 +7,7 @@ import (
 	"go.uber.org/fx"
 )
 
+// NewLambda returns CmdFunc for lambda command.
 func NewLambda() CmdFunc {
 
 	return func(options fx.Option) *co.Command {

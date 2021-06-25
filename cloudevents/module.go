@@ -10,6 +10,9 @@ import (
 
 var handlerWrapperOnce sync.Once
 
+// HandlerWrapperModule returns fx module for initialization of event handler wrapped in middleware.
+//
+// The module is only loaded once.
 func HandlerWrapperModule() fx.Option {
 	options := fx.Options()
 
@@ -31,6 +34,9 @@ func HandlerWrapperModule() fx.Option {
 
 var helperOnce sync.Once
 
+// HelperModule returns fx module for initialization of helper to start HTTP client for handlers.
+//
+// The module is only loaded once.
 func HelperModule(extraOptions fx.Option) fx.Option {
 	options := fx.Options()
 

@@ -16,14 +16,17 @@ import (
 	"github.com/americanas-go/ignite/aws/aws-sdk-go.v2/client/sns"
 )
 
+// Client represents a sns client.
 type Client struct {
 	client sns.Client
 }
 
+// NewClient creates a new sns client.
 func NewClient(c sns.Client) *Client {
 	return &Client{client: c}
 }
 
+// Publish publishes an event slice.
 func (p *Client) Publish(ctx context.Context, events []*v2.Event) error {
 
 	logger := log.FromContext(ctx).WithTypeOf(*p)

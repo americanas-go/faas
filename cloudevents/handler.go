@@ -8,14 +8,17 @@ import (
 	v2 "github.com/cloudevents/sdk-go/v2"
 )
 
+// Handler can be used to process events.
 type Handler struct {
 	handler *HandlerWrapper
 }
 
+// NewHandler creates a new handler wrapped in middleware.
 func NewHandler(h *HandlerWrapper) *Handler {
 	return &Handler{handler: h}
 }
 
+// Handle processes an event by calling the necessary middlewares.
 func (h *Handler) Handle(ctx context.Context, in v2.Event) (out *v2.Event, err error) {
 
 	logger := log.FromContext(ctx).WithTypeOf(*h)

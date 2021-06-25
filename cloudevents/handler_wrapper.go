@@ -11,12 +11,14 @@ import (
 	v2 "github.com/cloudevents/sdk-go/v2"
 )
 
+// HandlerWrapper can be used to process events wrapped in middleware.
 type HandlerWrapper struct {
 	handler     cloudevents.Handler
 	middlewares []Middleware
 	options     *HandlerWrapperOptions
 }
 
+// NewHandlerWrapper creates a new handler with options and wrapped in middleware.
 func NewHandlerWrapper(handler cloudevents.Handler, options *HandlerWrapperOptions, middlewares ...Middleware) *HandlerWrapper {
 
 	if middlewares == nil {
@@ -26,6 +28,7 @@ func NewHandlerWrapper(handler cloudevents.Handler, options *HandlerWrapperOptio
 	return &HandlerWrapper{handler: handler, middlewares: middlewares, options: options}
 }
 
+// NewDefaultHandlerWrapper creates a new handler wrapped in middleware.
 func NewDefaultHandlerWrapper(handler cloudevents.Handler, middlewares ...Middleware) *HandlerWrapper {
 
 	opt, err := DefaultHandlerWrapperOptions()
@@ -98,6 +101,7 @@ func (h *HandlerWrapper) beforeAll(parentCtx context.Context, inouts []*InOut) (
 	return parentCtx, nil
 }
 
+// Process processes events.
 func (h *HandlerWrapper) Process(parentCtx context.Context, inouts []*InOut) (err error) {
 
 	logger := log.FromContext(parentCtx).WithTypeOf(*h)

@@ -10,11 +10,14 @@ import (
 	v2 "github.com/cloudevents/sdk-go/v2"
 )
 
+// Logger represents the logger middleware for events.
 type Logger struct {
 	cloudevents.UnimplementedMiddleware
 	level string
 }
 
+// NewLogger creates a logger middleware.
+// The level will be as specified in config.
 func NewLogger() cloudevents.Middleware {
 	if !IsEnabled() {
 		return nil
@@ -22,6 +25,7 @@ func NewLogger() cloudevents.Middleware {
 	return &Logger{level: Level()}
 }
 
+// Before logs input event info before processing the handler.
 func (m *Logger) Before(ctx context.Context, in *v2.Event) (context.Context, error) {
 	logger := log.FromContext(ctx).WithTypeOf(*m)
 
@@ -39,6 +43,7 @@ func (m *Logger) Before(ctx context.Context, in *v2.Event) (context.Context, err
 	return ctx, nil
 }
 
+// After logs output event info, if any, upon processing the handler.
 func (m *Logger) After(ctx context.Context, in v2.Event, out *v2.Event, err error) (context.Context, error) {
 
 	logger := log.FromContext(ctx).WithTypeOf(*m)
