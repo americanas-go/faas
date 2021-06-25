@@ -16,14 +16,17 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
+// Client represents a sqs client.
 type Client struct {
 	client sqs.Client
 }
 
+// NewClient creates a new sqs client.
 func NewClient(c sqs.Client) *Client {
 	return &Client{client: c}
 }
 
+// Publish publishes an event slice.
 func (p *Client) Publish(ctx context.Context, events []*v2.Event) error {
 
 	logger := log.FromContext(ctx).WithTypeOf(*p)

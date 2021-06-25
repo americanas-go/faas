@@ -2,10 +2,12 @@ package cloudevents
 
 import "strings"
 
+// HandlerWrapperOptions represents options for handler wrapped in middleware.
 type HandlerWrapperOptions struct {
 	IDsToDiscard []string
 }
 
+// DefaultHandlerWrapperOptions returns handler wrapped in middleware options.
 func DefaultHandlerWrapperOptions() (*HandlerWrapperOptions, error) {
 	o := new(HandlerWrapperOptions)
 

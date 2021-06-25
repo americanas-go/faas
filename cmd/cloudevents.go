@@ -7,6 +7,7 @@ import (
 	"go.uber.org/fx"
 )
 
+// NewCloudEvents returns CmdFunc for cloudevents command.
 func NewCloudEvents() CmdFunc {
 	return func(options fx.Option) *co.Command {
 		return &co.Command{

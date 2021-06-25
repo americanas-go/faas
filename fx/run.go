@@ -5,6 +5,7 @@ import (
 	"go.uber.org/fx"
 )
 
+// Run executes the fx app.
 func Run(options fx.Option) error {
 	app := gifx.NewApp(options)
 	if app.Err() != nil {

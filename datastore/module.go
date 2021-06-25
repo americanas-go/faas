@@ -13,6 +13,10 @@ import (
 
 var eventOnce sync.Once
 
+// EventModule returns fx module for initialization of event module based on the configured event provider.
+// It can be: nats (default), kinesis, sns or sqs.
+//
+// The module is only loaded once.
 func EventModule() fx.Option {
 
 	options := fx.Options()

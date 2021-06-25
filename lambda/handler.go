@@ -9,16 +9,18 @@ import (
 	"github.com/aws/aws-lambda-go/lambdacontext"
 )
 
+// Handler can be used to process events.
 type Handler struct {
 	handler *cloudevents.HandlerWrapper
 	options *Options
 }
 
+// NewHandler creates a new handler wrapped in middleware.
 func NewHandler(handler *cloudevents.HandlerWrapper, options *Options) *Handler {
 	return &Handler{handler: handler, options: options}
 }
 
-// Handler handles a event
+// Handle processes an event by calling the necessary middlewares.
 func (h *Handler) Handle(ctx context.Context, event Event) error {
 
 	logger := log.FromContext(ctx).WithTypeOf(*h)

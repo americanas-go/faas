@@ -11,6 +11,9 @@ import (
 
 var once sync.Once
 
+// HelperModule returns fx module for initialization of helper to start NATS client for handlers.
+//
+// The module is only loaded once.
 func HelperModule(extraOptions fx.Option) fx.Option {
 	options := fx.Options()
 
