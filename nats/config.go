@@ -15,10 +15,12 @@ func init() {
 	config.Add(queue, "changeme", "nats listener queue")
 }
 
+// SubjectValue returns the subjects from the configuration via "faas.nats.subjects" key.
 func SubjectsValue() []string {
 	return config.Strings(subjects)
 }
 
+// QueueValue returns the queue from the configuration via "faas.nats.queue" key.
 func QueueValue() string {
 	return config.String(queue)
 }

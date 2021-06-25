@@ -7,10 +7,12 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
+// Helper assists in creating event handlers.
 type Helper struct {
 	handler *Handler
 }
 
+// NewHelper returns a new Helper with options.
 func NewHelper(handler *cloudevents.HandlerWrapper, options *Options) *Helper {
 
 	h := NewHandler(handler, options)
@@ -20,6 +22,7 @@ func NewHelper(handler *cloudevents.HandlerWrapper, options *Options) *Helper {
 	}
 }
 
+// NewHelper returns a new Helper with default options.
 func NewDefaultHelper(handler *cloudevents.HandlerWrapper) *Helper {
 
 	opt, err := DefaultOptions()
@@ -30,6 +33,7 @@ func NewDefaultHelper(handler *cloudevents.HandlerWrapper) *Helper {
 	return NewHelper(handler, opt)
 }
 
+// Start starts HTTP client for handle events.
 func (h *Helper) Start() {
 	lambda.Start(h.handler.Handle)
 }

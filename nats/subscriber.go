@@ -12,6 +12,7 @@ import (
 	n "github.com/nats-io/nats.go"
 )
 
+// SubscriberListener represents a subscriber listener.
 type SubscriberListener struct {
 	q       *nats.Subscriber
 	handler *cloudevents.HandlerWrapper
@@ -19,6 +20,7 @@ type SubscriberListener struct {
 	queue   string
 }
 
+// NewSubscriberListener returns a subscriber listener.
 func NewSubscriberListener(q *nats.Subscriber, handler *cloudevents.HandlerWrapper, subject string,
 	queue string) *SubscriberListener {
 	return &SubscriberListener{
@@ -29,6 +31,7 @@ func NewSubscriberListener(q *nats.Subscriber, handler *cloudevents.HandlerWrapp
 	}
 }
 
+// Subscribe subscribes to a particular subject in the listening subscriber's queue.
 func (l *SubscriberListener) Subscribe(ctx context.Context) (*n.Subscription, error) {
 	return l.q.Subscribe(l.subject, l.queue, l.h)
 }
