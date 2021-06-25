@@ -24,7 +24,6 @@ func EventModule() fx.Option {
 		switch value {
 		case "kinesis":
 			options = kinesis.Module()
-
 		case "sns":
 			options = sns.Module()
 		case "sqs":

@@ -41,21 +41,11 @@ func (p *Client) Publish(ctx context.Context, events []*v2.Event) error {
 	return nil
 }
 
-//GetURL gets URL based on default aws configs, resource name and service as the pattern:
-//  https://\<service\>.\<region\>.amazonaws.com/\<account_number\>/\<resource_name\>
-func (p *Client) getAwsUrl(resourceName, service string) string {
-	//FIXME reference to fix this up: https://github.com/awsdocs/aws-doc-sdk-examples/blob/master/go/example_code/sqs/sqs_getqueueurl.go
-	//TODO move to ignite sqs client
-	region := "fixme"        //giaws.Region()
-	accountNumber := "fixme" //giaws.AccountNumber()
-	return fmt.Sprintf("https://%s.%s.amazonaws.com/%s/%s", service, region, accountNumber, resourceName)
-}
+func (p *Client) send(ctx context.Context, events []*v2.Event) (err error) {
 
-func (p *Client) send(parentCtx context.Context, events []*v2.Event) (err error) {
+	logger := log.FromContext(ctx).WithTypeOf(*p)
 
-	logger := log.FromContext(parentCtx).WithTypeOf(*p)
-
-	g, gctx := errgroup.WithContext(parentCtx)
+	g, gctx := errgroup.WithContext(ctx)
 	defer gctx.Done()
 
 	for _, e := range events {
@@ -71,9 +61,14 @@ func (p *Client) send(parentCtx context.Context, events []*v2.Event) (err error)
 				return errors.Wrap(err, errors.Internalf("error on marshal. %s", err.Error()))
 			}
 
+			queueUrl, err := p.client.ResolveQueueUrl(ctx, event.Subject())
+			if err != nil {
+				return err
+			}
+
 			input := &awssqs.SendMessageInput{
 				MessageBody: aws.String(string(rawMessage)),
-				QueueUrl:    aws.String(p.getAwsUrl(event.Subject(), "awssqs")),
+				QueueUrl:    queueUrl,
 			}
 
 			if group, ok := event.Extensions()["group"]; ok {
@@ -85,8 +80,7 @@ func (p *Client) send(parentCtx context.Context, events []*v2.Event) (err error)
 				Info(string(rawMessage))
 
 			err = try.Do(func(attempt int) (bool, error) {
-				var err error
-				err = p.client.Publish(gctx, input)
+				err := p.client.Publish(gctx, input)
 				if err != nil {
 					return attempt < 5, errors.NewInternal(err, "could not be published in awssqs")
 				}
