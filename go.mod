@@ -3,16 +3,18 @@ module github.com/americanas-go/faas
 go 1.16
 
 require (
-	github.com/americanas-go/config v1.2.0
-	github.com/americanas-go/errors v1.0.0
-	github.com/americanas-go/ignite v1.0.0-alpha-16
-	github.com/americanas-go/log v1.3.0
+	github.com/americanas-go/config v1.3.0
+	github.com/americanas-go/errors v1.1.0
+	github.com/americanas-go/ignite v1.0.0-beta.2
+	github.com/americanas-go/log v1.4.0
 	github.com/americanas-go/utils v1.0.0
 	github.com/aws/aws-lambda-go v1.13.3
-	github.com/aws/aws-sdk-go-v2 v1.4.0
-	github.com/aws/aws-sdk-go-v2/service/kinesis v1.2.3
-	github.com/aws/aws-sdk-go-v2/service/sns v1.3.0
-	github.com/aws/aws-sdk-go-v2/service/sqs v1.3.2
+	github.com/aws/aws-sdk-go v1.36.1
+	github.com/aws/aws-sdk-go-v2 v1.6.0
+	github.com/aws/aws-sdk-go-v2/credentials v1.2.1
+	github.com/aws/aws-sdk-go-v2/service/kinesis v1.4.0
+	github.com/aws/aws-sdk-go-v2/service/sns v1.5.0
+	github.com/aws/aws-sdk-go-v2/service/sqs v1.4.2
 	github.com/cloudevents/sdk-go/v2 v2.4.1
 	github.com/google/uuid v1.1.2
 	github.com/matryer/try v0.0.0-20161228173917-9ac251b645a2
