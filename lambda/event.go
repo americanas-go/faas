@@ -13,8 +13,9 @@ type Record struct {
 	EventName              string                                `json:"eventName"`
 	EventID                string                                `json:"eventID"`
 	SNS                    events.SNSEntity                      `json:"sns"`
-	S3                     events.S3EventRecord                  `json:"s3"`
+	S3                     events.S3Entity                       `json:"s3"`
 	Kinesis                events.KinesisRecord                  `json:"kinesis"`
+	DynamoDB               events.DynamoDBStreamRecord           `json:"dynamodb"`
 	MessageId              string                                `json:"messageId"`
 	ReceiptHandle          string                                `json:"receiptHandle"`
 	Body                   string                                `json:"body"`

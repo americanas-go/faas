@@ -11,10 +11,10 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-func fromS3(parentCtx context.Context, event Event) []*cloudevents.InOut {
+func fromDynamoDB(parentCtx context.Context, event Event) []*cloudevents.InOut {
 
 	logger := log.FromContext(parentCtx)
-	logger.Info("receiving S3 event")
+	logger.Info("receiving DynamoDB event")
 
 	lc, _ := lambdacontext.FromContext(parentCtx)
 
@@ -34,11 +34,11 @@ func fromS3(parentCtx context.Context, event Event) []*cloudevents.InOut {
 			var err error
 
 			in := v2.NewEvent()
-			in.SetID(record.S3.Object.Key)
-			in.SetType(record.EventName)
-			in.SetData("", record.S3)
-			in.SetSource(record.EventSource)
 
+			in.SetID(record.EventID)
+			in.SetType(record.EventName)
+			in.SetData("", record.DynamoDB)
+			in.SetSource(record.EventSource)
 			in.SetExtension("awsRequestID", lc.AwsRequestID)
 			in.SetExtension("invokedFunctionArn", lc.InvokedFunctionArn)
 
