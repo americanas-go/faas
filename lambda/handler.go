@@ -75,14 +75,20 @@ func (h *Handler) getInOuts(ctx context.Context, event Event) ([]*cloudevents.In
 	var inouts []*cloudevents.InOut
 
 	if len(event.Records) > 0 {
-
-		if event.Records[0].EventSource == "aws:kinesis" {
-			inouts = fromKinesis(ctx, event)
-		} else if event.Records[0].EventSource == "aws:sqs" {
-			inouts = fromSQS(ctx, event)
-		} else if event.Records[0].EventSource == "aws:sns" {
-			inouts = fromSNS(ctx, event)
-		} else {
+		eventSource := event.Records[0].EventSource
+		logger.Infof("receiving %s event", eventSource)
+		switch eventSource {
+		case "aws:kinesis":
+			inouts = convertEvent(ctx, event, fromKinesis)
+		case "aws:sqs":
+			inouts = convertEvent(ctx, event, fromSQS)
+		case "aws:sns":
+			inouts = convertEvent(ctx, event, fromSNS)
+		case "aws:s3":
+			inouts = convertEvent(ctx, event, fromS3)
+		case "aws:dynamodb":
+			inouts = convertEvent(ctx, event, fromDynamoDB)
+		default:
 			return nil, errors.NotImplementedf("the trigger received has not yet been implemented")
 		}
 
