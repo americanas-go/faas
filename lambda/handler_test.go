@@ -63,8 +63,8 @@ func (s *HandlerSuite) TestHandler_Handle() {
 				handler: func(a *assert.Assertions) igcloudevents.Handler {
 					return func(ctx context.Context, in v2.Event) (*v2.Event, error) {
 						a.Equal("6aee8d49-76fd-4900-a49b-eecac3552c5a", in.ID())
-						a.Equal("aws:kinesis:record", in.Type())
-						a.Equal("aws:kinesis", in.Source())
+						a.Equal("receiver/internal/app/receiver/domain/model/item", in.Type())
+						a.Equal("receiver-receiver", in.Source())
 						a.Equal(lc.AwsRequestID, in.Extensions()["awsrequestid"])
 						a.Equal(lc.InvokedFunctionArn, in.Extensions()["invokedfunctionarn"])
 						var evt map[string]interface{}
@@ -173,9 +173,9 @@ func (s *HandlerSuite) TestHandler_Handle() {
 			fields: fields{
 				handler: func(a *assert.Assertions) igcloudevents.Handler {
 					return func(ctx context.Context, in v2.Event) (*v2.Event, error) {
-						a.Equal("2e1424d4-f796-459a-8184-9c92662be6da", in.ID())
-						a.Equal("aws:sqs", in.Type())
-						a.Equal("aws:sqs", in.Source())
+						a.Equal("123456", in.ID())
+						a.Equal("myType", in.Type())
+						a.Equal("mySource", in.Source())
 						a.Equal(lc.AwsRequestID, in.Extensions()["awsrequestid"])
 						a.Equal(lc.InvokedFunctionArn, in.Extensions()["invokedfunctionarn"])
 						var evt map[string]interface{}

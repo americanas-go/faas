@@ -3,7 +3,7 @@
         {
             "messageId": "2e1424d4-f796-459a-8184-9c92662be6da",
             "receiptHandle": "AQEBzWwaftRI0KuVm4tP+/7q1rGgNqicHq...",
-            "body": "{\"id\":\"abc\"}",
+            "body": "{\"data\":{\"id\":\"abc\"},\"id\":\"123456\",\"source\":\"mySource\",\"specversion\":\"1.0\",\"subject\":\"white-chocolate\",\"type\":\"myType\"}",
             "attributes": {
                 "ApproximateReceiveCount": "1",
                 "SentTimestamp": "1545082650636",

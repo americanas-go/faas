@@ -1,9 +1,16 @@
 package lambda
 
 import (
+	"context"
+	"encoding/json"
+	"sync"
 	"time"
 
+	"github.com/americanas-go/faas/cloudevents"
+	"github.com/americanas-go/log"
 	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambdacontext"
+	"github.com/cloudevents/sdk-go/v2/event"
 )
 
 type Record struct {
@@ -36,4 +43,44 @@ type Event struct {
 	Account    string    `json:"account"`
 	Resources  []string  `json:"resources"`
 	Records    []Record  `json:"Records"`
+}
+
+func convertEvent(ctx context.Context, event Event, from func(record Record) (*event.Event, error)) []*cloudevents.InOut {
+	logger := log.FromContext(ctx)
+
+	lc, _ := lambdacontext.FromContext(ctx)
+
+	mu := &sync.Mutex{}
+	var inouts []*cloudevents.InOut
+
+	var wg sync.WaitGroup
+
+	for _, record := range event.Records {
+		wg.Add(1)
+		go func(record Record) {
+			defer wg.Done()
+			j, _ := json.Marshal(record) //this should be avoided
+			logger.Debug(string(j))
+			in, err := from(record)
+			if in.ID() == "" {
+				in.SetID(record.EventID)
+			}
+			if in.Type() == "" {
+				in.SetType(record.EventName)
+			}
+			if in.Source() == "" {
+				in.SetSource(record.EventSource)
+			}
+			in.SetExtension("awsRequestID", lc.AwsRequestID)
+			in.SetExtension("invokedFunctionArn", lc.InvokedFunctionArn)
+			mu.Lock()
+			inouts = append(inouts, &cloudevents.InOut{
+				In:  in,
+				Err: err,
+			})
+			mu.Unlock()
+		}(record)
+	}
+	wg.Wait()
+	return inouts
 }
