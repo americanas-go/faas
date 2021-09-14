@@ -121,6 +121,8 @@ func (s *HandlerSuite) TestHandler_Handle() {
 						a.Equal("aws:dynamodb", in.Source())
 						a.Equal(lc.AwsRequestID, in.Extensions()["awsrequestid"])
 						a.Equal(lc.InvokedFunctionArn, in.Extensions()["invokedfunctionarn"])
+						a.Equal("Service", in.Extensions()["useridentitytype"])
+						a.Equal("dynamodb.amazonaws.com", in.Extensions()["useridentityprincipalid"])
 
 						var evt awsevents.DynamoDBStreamRecord
 						in.DataAs(&evt)
