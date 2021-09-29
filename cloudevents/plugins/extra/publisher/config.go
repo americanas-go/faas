@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	root    = cloudevents.ExtRoot + ".publisher"
+	root    = cloudevents.PluginsRoot + ".publisher"
 	enabled = root + ".enabled"
 )
 

@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	root    = cloudevents.ExtRoot + ".logger"
+	root    = cloudevents.PluginsRoot + ".logger"
 	enabled = root + ".enabled"
 	level   = root + ".level"
 )

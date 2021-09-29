@@ -6,7 +6,7 @@ import (
 
 const (
 	root                  = "faas.cloudevents"
-	ExtRoot               = root + ".ext"
+	PluginsRoot           = root + ".plugins"
 	handleDiscardEventsID = root + ".handle.discard.ids"
 )
 

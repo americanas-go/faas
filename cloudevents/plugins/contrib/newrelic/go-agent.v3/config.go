@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	root    = cloudevents.ExtRoot + ".newrelic"
+	root    = cloudevents.PluginsRoot + ".newrelic"
 	enabled = root + ".enabled"
 	txName  = root + ".txName"
 )
