@@ -1,6 +1,7 @@
 package lambda
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"sync"
@@ -32,6 +33,7 @@ type Record struct {
 	MessageAttributes      map[string]events.SQSMessageAttribute `json:"messageAttributes"`
 	EventSourceARN         string                                `json:"eventSourceARN"`
 	AWSRegion              string                                `json:"awsRegion"`
+	UserIdentity           interface{}                           `json:"userIdentity"`
 }
 
 type Event struct {
@@ -83,4 +85,17 @@ func convertEvent(ctx context.Context, event Event, from func(record Record) (*e
 	}
 	wg.Wait()
 	return inouts
+}
+
+func transcode(in, out interface{}) error {
+	buf := new(bytes.Buffer)
+	if err := json.NewEncoder(buf).Encode(in); err != nil {
+		return err
+	}
+
+	if err := json.NewDecoder(buf).Decode(out); err != nil {
+		return err
+	}
+
+	return nil
 }
