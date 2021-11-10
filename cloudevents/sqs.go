@@ -11,10 +11,7 @@ import (
 )
 
 func isSQSEvent(ctx context.Context, in *v2.Event) bool {
-	if strings.SliceContains([]string{"com.amazon.sqs.message", "aws.sqs.message"}, in.Type()) {
-		return true
-	}
-	return false
+	return strings.SliceContains([]string{"com.amazon.sqs.message", "aws.sqs.message"}, in.Type())
 }
 
 func fromSQS(ctx context.Context, in *v2.Event) {
