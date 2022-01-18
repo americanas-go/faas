@@ -15,7 +15,7 @@ type Helper struct {
 // NewHelper returns a new Helper.
 func NewHelper(ctx context.Context, handler *HandlerWrapper) *Helper {
 
-	client := cloudevents.NewDefaultClient(ctx, NewHandler(handler).Handle)
+	client := cloudevents.NewHTTP(ctx, NewHandler(handler).Handle)
 
 	return &Helper{
 		client: client,
