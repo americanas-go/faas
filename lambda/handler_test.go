@@ -171,6 +171,23 @@ func (s *HandlerSuite) TestHandler_Handle() {
 			wantErr:       func(err error) bool { return err == nil },
 		},
 		{
+			name: "on sqs plain message success event",
+			fields: fields{
+				handler: func(a *assert.Assertions) igcloudevents.Handler {
+					return func(ctx context.Context, in v2.Event) (*v2.Event, error) {
+						var evt map[string]interface{}
+						in.DataAs(&evt)
+						a.Equal("abc", evt["id"])
+						return &in, nil
+					}
+				},
+				middlewares: middlewares,
+				options:     options,
+			},
+			eventFilename: "sqs_plain_success.json",
+			wantErr:       func(err error) bool { return err == nil },
+		},
+		{
 			name: "on sqs success event",
 			fields: fields{
 				handler: func(a *assert.Assertions) igcloudevents.Handler {
