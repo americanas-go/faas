@@ -1,0 +1,20 @@
+{
+    "Records": [
+        {
+            "messageId": "2e1424d4-f796-459a-8184-9c92662be6da",
+            "receiptHandle": "AQEBzWwaftRI0KuVm4tP+/7q1rGgNqicHq...",
+            "body": "{\"specversion\":\"1.0\",\"id\":\"f56e4061-5861-4d94-9689-5c9779bf7458\",\"source\":\"aws:sqs\",\"type\":\"\",\"datacontenttype\":\"application/json\",\"data\":{\"Message\":\"{\\\"id\\\":\\\"6271463aa33c10f8d9cc0fd7\\\",\\\"eventType\\\":\\\"CREATE_PRODUCT_REVIEW\\\",\\\"eventTime\\\":\\\"2022-05-03T15:11:54.285590539Z\\\",\\\"brand\\\":\\\"brand\\\",\\\"rating\\\":5}\",\"MessageId\":\"1ce2e006-b64f-5ac7-b5b1-baedfe358583\",\"SequenceNumber\":\"10000000002104513000\",\"Timestamp\":\"2022-05-03T15:11:54.306Z\",\"TopicArn\":\"arn:aws:sns:us-east-1:123456789:queue\",\"Type\":\"Notification\",\"UnsubscribeURL\":\"\"},\"awsrequestid\":\"8c96ea29-771e-5df1-abb5-b0c23f7086bc\",\"invokedfunctionarn\":\"arn:aws:lambda:us-east-1:123456789:function:func\"}",
+            "attributes": {
+                "ApproximateReceiveCount": "1",
+                "SentTimestamp": "1545082650636",
+                "SenderId": "AIDAIENQZJOLO23YVJ4VO",
+                "ApproximateFirstReceiveTimestamp": "1545082650649"
+            },
+            "messageAttributes": {},
+            "md5OfBody": "e4e68fb7bd0e697a0ae8f1bb342846b3",
+            "eventSource": "aws:sqs",
+            "eventSourceARN": "arn:aws:sqs:us-east-2:123456789012:my-queue",
+            "awsRegion": "us-east-2"
+        }
+    ]
+}
