@@ -227,24 +227,6 @@ func (s *HandlerSuite) TestHandler_Handle() {
 			eventFilename: "sqs_wraps_sns_success.json",
 			wantErr:       func(err error) bool { return err == nil },
 		},
-		{
-			name: "on sqs wrapping sns success event case 2",
-			fields: fields{
-				handler: func(a *assert.Assertions) igcloudevents.Handler {
-					return func(ctx context.Context, in v2.Event) (*v2.Event, error) {
-						a.Equal("f56e4061-5861-4d94-9689-5c9779bf7458", in.ID())
-						var evt map[string]interface{}
-						in.DataAs(&evt)
-						a.Equal("CREATE_PRODUCT_REVIEW", evt["eventType"])
-						return &in, nil
-					}
-				},
-				middlewares: middlewares,
-				options:     options,
-			},
-			eventFilename: "sqs_wraps_sns_success_2.json",
-			wantErr:       func(err error) bool { return err == nil },
-		},
 	}
 	for _, tt := range tests {
 		s.T().Run(tt.name, func(t *testing.T) {

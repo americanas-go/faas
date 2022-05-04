@@ -16,30 +16,24 @@ func fromSQS(record Record) (*event.Event, error) {
 	in := v2.NewEvent()
 	body := []byte(record.Body)
 	if err = json.Unmarshal(body, &in); err != nil {
-		unmarshal(&in, body)
-	} else if in.Data() != nil {
-		unmarshal(&in, in.Data())
+		var data interface{}
+		if err = json.Unmarshal(body, &data); err != nil {
+			return nil, errors.New("not json message on SQS record")
+		} else if isSNSMessage(body) {
+			if err = unmarshalSNSMessage(body, &data); err != nil {
+				return nil, err
+			}
+		}
+		if err = in.SetData(v2.ApplicationJSON, data); err != nil {
+			return nil, errors.NewNotValid(err, "could not set data in event")
+		}
 	}
 	if in.ID() == "" {
 		in.SetID(record.MessageId)
 	}
 	return &in, err
 }
-func unmarshal(in *event.Event, body []byte) error {
-	var err error
-	var data interface{}
-	if err = json.Unmarshal(body, &data); err != nil {
-		return errors.New("not json message on SQS record")
-	} else if isSNSMessage(body) {
-		if err = unmarshalSNSMessage(body, &data); err != nil {
-			return err
-		}
-	}
-	if err = in.SetData(v2.ApplicationJSON, data); err != nil {
-		return errors.NewNotValid(err, "could not set data in event")
-	}
-	return nil
-}
+
 func isSNSMessage(data []byte) bool {
 	s := string(data)
 	return strings.Contains(s, "\"TopicArn\":") && strings.Contains(s, "\"Message\":")
