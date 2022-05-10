@@ -175,6 +175,7 @@ func (s *HandlerSuite) TestHandler_Handle() {
 			fields: fields{
 				handler: func(a *assert.Assertions) igcloudevents.Handler {
 					return func(ctx context.Context, in v2.Event) (*v2.Event, error) {
+						a.Equal("aws:sqs", in.Source())
 						var evt map[string]interface{}
 						in.DataAs(&evt)
 						a.Equal("abc", evt["id"])
@@ -218,6 +219,7 @@ func (s *HandlerSuite) TestHandler_Handle() {
 						var evt map[string]interface{}
 						in.DataAs(&evt)
 						a.Equal("123", evt["test"])
+						a.Equal("id-123", evt["id"])
 						return &in, nil
 					}
 				},
