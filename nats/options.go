@@ -4,11 +4,13 @@ import (
 	"github.com/americanas-go/config"
 )
 
+// Options can be used to create customized handler.
 type Options struct {
 	Subjects []string
 	Queue    string
 }
 
+// DefaultOptions returns options based in config.
 func DefaultOptions() (*Options, error) {
 
 	o := &Options{}

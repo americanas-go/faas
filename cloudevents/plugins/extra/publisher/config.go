@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	root    = cloudevents.ExtRoot + ".publisher"
+	root    = cloudevents.PluginsRoot + ".publisher"
 	enabled = root + ".enabled"
 )
 
@@ -14,6 +14,7 @@ func init() {
 	config.Add(enabled, true, "enable/disable publisher middleware")
 }
 
+// IsEnabled reports whether publisher middleware is enabled in the configuration.
 func IsEnabled() bool {
 	return config.Bool(enabled)
 }

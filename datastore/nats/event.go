@@ -7,7 +7,7 @@ import (
 	ginats "github.com/americanas-go/ignite/nats-io/nats.go.v1"
 )
 
-// NewEvent returns a initialized client
+// NewEvent returns an initialized NATS client that implements event repository.
 func NewEvent(ctx context.Context) repository.Event {
 	publisher, _ := ginats.NewPublisher(ctx)
 	return NewClient(publisher)

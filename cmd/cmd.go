@@ -8,8 +8,10 @@ import (
 	"go.uber.org/fx"
 )
 
+// CmdFunc defines a function that return a command.
 type CmdFunc func(fx.Option) *co.Command
 
+// Run executes commands with injected fx modules.
 func Run(options fx.Option, c ...CmdFunc) error {
 
 	var cmds []*co.Command

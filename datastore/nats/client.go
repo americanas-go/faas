@@ -12,14 +12,17 @@ import (
 	"github.com/nats-io/nats.go"
 )
 
+// Client represents a NATS client that implements the event repository.
 type Client struct {
 	publisher *ginats.Publisher
 }
 
+// NewClient creates a new NATS client.
 func NewClient(publisher *ginats.Publisher) *Client {
 	return &Client{publisher: publisher}
 }
 
+// Publish publishes an event slice.
 func (p *Client) Publish(ctx context.Context, outs []*v2.Event) (err error) {
 
 	logger := log.FromContext(ctx).WithTypeOf(*p)
