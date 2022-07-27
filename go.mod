@@ -3,13 +3,13 @@ module github.com/americanas-go/faas
 go 1.18
 
 require (
-	github.com/americanas-go/config v1.6.0
+	github.com/americanas-go/config v1.8.0
 	github.com/americanas-go/errors v1.1.0
-	github.com/americanas-go/ignite v1.1.0-beta.9
-	github.com/americanas-go/log v1.8.2
+	github.com/americanas-go/ignite v1.1.0-beta.12
+	github.com/americanas-go/log v1.8.5
 	github.com/americanas-go/utils v1.1.0
-	github.com/aws/aws-lambda-go v1.32.1
-	github.com/aws/aws-sdk-go v1.44.52
+	github.com/aws/aws-lambda-go v1.33.0
+	github.com/aws/aws-sdk-go v1.44.63
 	github.com/aws/aws-sdk-go-v2 v1.16.7
 	github.com/aws/aws-sdk-go-v2/credentials v1.12.9
 	github.com/aws/aws-sdk-go-v2/service/kinesis v1.15.9
@@ -25,7 +25,7 @@ require (
 	github.com/spf13/cobra v1.5.0
 	github.com/stretchr/testify v1.8.0
 	go.uber.org/fx v1.17.1
-	golang.org/x/sync v0.0.0-20220601150217-0de741cfad7f
+	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
 )
 
 require (
@@ -63,23 +63,23 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/ravernkoh/cwlogsfmt v0.0.0-20180121032441-917bad983b4c // indirect
 	github.com/rs/zerolog v1.27.0 // indirect
-	github.com/sirupsen/logrus v1.8.1 // indirect
+	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/objx v0.4.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/dig v1.14.1 // indirect
 	go.uber.org/multierr v1.8.0 // indirect
 	go.uber.org/zap v1.21.0 // indirect
-	golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d // indirect
-	golang.org/x/net v0.0.0-20220708220712-1185a9018129 // indirect
-	golang.org/x/sys v0.0.0-20220712014510-0a85c31ab51e // indirect
+	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa // indirect
+	golang.org/x/net v0.0.0-20220726230323-06994584191e // indirect
+	golang.org/x/sys v0.0.0-20220727055044-e65921a090b8 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20220609170525-579cf78fd858 // indirect
-	google.golang.org/genproto v0.0.0-20220712132514-bdd2acd4974d // indirect
-	google.golang.org/grpc v1.47.0 // indirect
+	google.golang.org/genproto v0.0.0-20220725144611-272f38e5d71b // indirect
+	google.golang.org/grpc v1.48.0 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace github.com/americanas-go/ignite => ../ignite
+//replace github.com/americanas-go/ignite => ../ignite
