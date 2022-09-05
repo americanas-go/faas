@@ -5,17 +5,17 @@ go 1.18
 require (
 	github.com/americanas-go/config v1.8.0
 	github.com/americanas-go/errors v1.1.0
-	github.com/americanas-go/ignite v1.1.0-beta.12
+	github.com/americanas-go/ignite v1.1.0-beta.24
 	github.com/americanas-go/log v1.8.5
 	github.com/americanas-go/utils v1.1.0
-	github.com/aws/aws-lambda-go v1.33.0
+	github.com/aws/aws-lambda-go v1.34.1
 	github.com/aws/aws-sdk-go v1.44.63
-	github.com/aws/aws-sdk-go-v2 v1.16.7
+	github.com/aws/aws-sdk-go-v2 v1.16.14
 	github.com/aws/aws-sdk-go-v2/credentials v1.12.9
-	github.com/aws/aws-sdk-go-v2/service/kinesis v1.15.9
-	github.com/aws/aws-sdk-go-v2/service/sns v1.17.9
-	github.com/aws/aws-sdk-go-v2/service/sqs v1.19.0
-	github.com/cloudevents/sdk-go/v2 v2.10.1
+	github.com/aws/aws-sdk-go-v2/service/kinesis v1.15.2
+	github.com/aws/aws-sdk-go-v2/service/sns v1.17.3
+	github.com/aws/aws-sdk-go-v2/service/sqs v1.18.2
+	github.com/cloudevents/sdk-go/v2 v2.11.0
 	github.com/google/uuid v1.3.0
 	github.com/matryer/try v0.0.0-20161228173917-9ac251b645a2
 	github.com/nats-io/gnatsd v1.4.1
@@ -38,7 +38,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.8 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sso v1.11.12 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.16.9 // indirect
-	github.com/aws/smithy-go v1.12.0 // indirect
+	github.com/aws/smithy-go v1.13.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/gobeam/stringy v0.0.5 // indirect
@@ -56,7 +56,6 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/nats-io/go-nats v1.7.2 // indirect
-	github.com/nats-io/jwt/v2 v2.2.1-0.20220113022732-58e87895b296 // indirect
 	github.com/nats-io/nkeys v0.3.0 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
