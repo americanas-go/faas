@@ -28,7 +28,7 @@ func NewHelper(ctx context.Context, subscriber *nats.Subscriber, options *Option
 	}
 }
 
-// NewHelper returns a new Helper with default options.
+// NewDefaultHelper returns a new Helper with default options.
 func NewDefaultHelper(ctx context.Context, subscriber *nats.Subscriber, handler *cloudevents.HandlerWrapper) *Helper {
 
 	opt, err := DefaultOptions()
