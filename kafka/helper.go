@@ -60,8 +60,8 @@ func (h *Helper) subscribe(ctx context.Context, topic string) {
 		Brokers:     h.options.Brokers,
 		GroupID:     h.options.GroupId,
 		Topic:       topic,
-		Logger:      log.GetLogger(),
-		ErrorLogger: log.GetLogger(),
+		Logger:      &Logger{},
+		ErrorLogger: &ErrorLogger{},
 		/*
 			GroupTopics:            nil,
 			Partition:              0,
