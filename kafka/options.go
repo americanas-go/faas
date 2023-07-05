@@ -6,9 +6,10 @@ import (
 
 // Options can be used to create customized handler.
 type Options struct {
-	Brokers  []string
-	Subjects []string
-	GroupId  string
+	Brokers     []string
+	Subjects    []string
+	GroupId     string
+	Concurrency int
 }
 
 // DefaultOptions returns options based in config.

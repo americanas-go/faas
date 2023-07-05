@@ -6,6 +6,8 @@ import (
 	"github.com/americanas-go/errors"
 	"github.com/cloudevents/sdk-go/v2/event"
 	"github.com/segmentio/kafka-go"
+	"golang.org/x/sync/semaphore"
+	"time"
 
 	"github.com/americanas-go/faas/cloudevents"
 	"github.com/americanas-go/log"
@@ -55,9 +57,11 @@ func (h *Helper) subscribe(ctx context.Context, topic string) {
 		WithField("groupId", h.options.GroupId).ToContext(ctx)
 
 	reader := kafka.NewReader(kafka.ReaderConfig{
-		Brokers: h.options.Brokers,
-		GroupID: h.options.GroupId,
-		Topic:   topic,
+		Brokers:     h.options.Brokers,
+		GroupID:     h.options.GroupId,
+		Topic:       topic,
+		Logger:      log.GetLogger(),
+		ErrorLogger: log.GetLogger(),
 		/*
 			GroupTopics:            nil,
 			Partition:              0,
@@ -88,12 +92,21 @@ func (h *Helper) subscribe(ctx context.Context, topic string) {
 		*/
 	})
 
+	var sem = semaphore.NewWeighted(int64(h.options.Concurrency))
+
 	for {
-		m, err := reader.ReadMessage(ctx)
-		if err != nil {
+		if err := sem.Acquire(ctx, 1); err != nil {
 			log.Errorf(err.Error())
 		}
-		h.handle(ctx, m)
+		go func(ctx context.Context) {
+			bctx := &contextWithoutDeadline{ctx}
+			m, err := reader.ReadMessage(bctx)
+			if err != nil {
+				log.Errorf(err.Error())
+			}
+			h.handle(ctx, m)
+			sem.Release(1)
+		}(ctx)
 	}
 
 }
@@ -103,13 +116,11 @@ func (h *Helper) handle(ctx context.Context, msg kafka.Message) {
 	logger := log.FromContext(ctx).WithTypeOf(*h)
 
 	in := event.New()
-	err := json.Unmarshal(msg.Value, &in)
-	if err != nil {
-
+	if err := json.Unmarshal(msg.Value, &in); err != nil {
 		var data interface{}
-
 		if err := json.Unmarshal(msg.Value, &data); err != nil {
 			logger.Errorf("could not decode kafka record. %s", err.Error())
+			return
 		} else {
 			err := in.SetData("", data)
 			if err != nil {
@@ -117,16 +128,26 @@ func (h *Helper) handle(ctx context.Context, msg kafka.Message) {
 				return
 			}
 		}
-
 	}
 
 	var inouts []*cloudevents.InOut
 
 	inouts = append(inouts, &cloudevents.InOut{In: &in})
 
-	err = h.handler.Process(ctx, inouts)
-	if err != nil {
+	if err := h.handler.Process(ctx, inouts); err != nil {
 		logger.Error(errors.ErrorStack(err))
 	}
 
+}
+
+type contextWithoutDeadline struct {
+	ctx context.Context
+}
+
+func (*contextWithoutDeadline) Deadline() (time.Time, bool) { return time.Time{}, false }
+func (*contextWithoutDeadline) Done() <-chan struct{}       { return nil }
+func (*contextWithoutDeadline) Err() error                  { return nil }
+
+func (l *contextWithoutDeadline) Value(key interface{}) interface{} {
+	return l.ctx.Value(key)
 }
