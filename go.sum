@@ -10,8 +10,8 @@ github.com/americanas-go/config v1.8.4 h1:T0bRCHQl1LfZHpU0R9Js/fOoXMKV1E8Sa1Jw6R
 github.com/americanas-go/config v1.8.4/go.mod h1:QWF14smqPomA9mp14jXm5Z9Z6FKmt2BTxXSg3qv0980=
 github.com/americanas-go/errors v1.1.1 h1:2SZkpwPwvEfQz+rvBZRPKbw4JhndTGSaAgqcESg/Pqo=
 github.com/americanas-go/errors v1.1.1/go.mod h1:hMayqj9yUESTubhsdfzcXmHuKvcNEMjr2AwCv1xTzRE=
-github.com/americanas-go/ignite v1.4.2 h1:/R+enkE2R4i0PDvV91jnndGan7Huzai7P0PQm5etlts=
-github.com/americanas-go/ignite v1.4.2/go.mod h1:FHgvolM5x6GP0V2MmmrlnCAOgni80d/TRFgEDGRVRSw=
+github.com/americanas-go/ignite v1.4.4 h1:ko9YMMplxEGYLobeZ0lN0Tu0EJI2yZmsYHEvNUevXPE=
+github.com/americanas-go/ignite v1.4.4/go.mod h1:FHgvolM5x6GP0V2MmmrlnCAOgni80d/TRFgEDGRVRSw=
 github.com/americanas-go/log v1.8.8 h1:5vb50YPSTsDRNaIS8LqjP2v5+UWKXD9SY/pCnZ3QADo=
 github.com/americanas-go/log v1.8.8/go.mod h1:UkWkvy0A+ovy/QPPX//R04h1Q6QxulCOCAfL9ivOL4w=
 github.com/americanas-go/utils v1.1.0 h1:a9vdYTZ9Ulef/02lPQN8JrTHAj6cawBvOKnOIHG10og=

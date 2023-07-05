@@ -6,7 +6,7 @@ type Logger struct {
 }
 
 func (l *Logger) Printf(msg string, args ...interface{}) {
-	log.Infof(msg, args...)
+	log.Debugf(msg, args...)
 }
 
 type ErrorLogger struct {
