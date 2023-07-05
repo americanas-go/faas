@@ -9,12 +9,12 @@ const (
 	topics      = root + ".topics"
 	groupId     = root + ".groupId"
 	brokers     = root + ".brokers"
-	concorrency = root + ".concorrency"
+	concurrency = root + ".concurrency"
 )
 
 func init() {
 	config.Add(topics, []string{"changeme"}, "kafka listener topics")
 	config.Add(brokers, []string{"localhost:9090"}, "kafka listener brokers")
 	config.Add(groupId, "changeme", "kafka listener groupId")
-	config.Add(concorrency, 5, "kafka listener concurrency")
+	config.Add(concurrency, 10, "kafka listener concurrency")
 }
