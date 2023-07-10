@@ -4,13 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/americanas-go/errors"
+	"github.com/americanas-go/faas/cloudevents"
+	"github.com/americanas-go/log"
 	"github.com/cloudevents/sdk-go/v2/event"
 	"github.com/segmentio/kafka-go"
 	"golang.org/x/sync/semaphore"
-	"time"
-
-	"github.com/americanas-go/faas/cloudevents"
-	"github.com/americanas-go/log"
 )
 
 // Helper assists in creating event handlers.
@@ -128,13 +126,15 @@ func (h *Helper) handle(ctx context.Context, msg kafka.Message) {
 		if err := json.Unmarshal(msg.Value, &data); err != nil {
 			logger.Errorf("could not decode kafka record. %s", err.Error())
 			return
-		} else {
-			err := in.SetData("", data)
-			if err != nil {
-				logger.Errorf("could set data from kafka record. %s", err.Error())
-				return
-			}
 		}
+
+		err := in.SetData("", data)
+		if err != nil {
+			logger.Errorf("could set data from kafka record. %s", err.Error())
+			return
+		}
+
+		// in.SetID(msg.)
 	}
 
 	var inouts []*cloudevents.InOut
@@ -147,6 +147,7 @@ func (h *Helper) handle(ctx context.Context, msg kafka.Message) {
 
 }
 
+/*
 type contextWithoutDeadline struct {
 	ctx context.Context
 }
@@ -158,3 +159,4 @@ func (*contextWithoutDeadline) Err() error                  { return nil }
 func (l *contextWithoutDeadline) Value(key interface{}) interface{} {
 	return l.ctx.Value(key)
 }
+*/
