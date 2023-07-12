@@ -4,13 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/americanas-go/errors"
+	"github.com/americanas-go/faas/cloudevents"
+	"github.com/americanas-go/log"
 	"github.com/cloudevents/sdk-go/v2/event"
 	"github.com/segmentio/kafka-go"
 	"golang.org/x/sync/semaphore"
-	"time"
-
-	"github.com/americanas-go/faas/cloudevents"
-	"github.com/americanas-go/log"
 )
 
 // Helper assists in creating event handlers.
@@ -57,18 +55,19 @@ func (h *Helper) subscribe(ctx context.Context, topic string) {
 		WithField("groupId", h.options.GroupId).ToContext(ctx)
 
 	reader := kafka.NewReader(kafka.ReaderConfig{
-		Brokers:     h.options.Brokers,
-		GroupID:     h.options.GroupId,
-		Topic:       topic,
-		Logger:      &Logger{},
-		ErrorLogger: &ErrorLogger{},
+		Brokers:       h.options.Brokers,
+		GroupID:       h.options.GroupId,
+		Topic:         topic,
+		Logger:        &Logger{},
+		ErrorLogger:   &ErrorLogger{},
+		QueueCapacity: h.options.QueueCapacity,
+		MinBytes:      h.options.MinBytes,
+		MaxBytes:      h.options.MaxBytes,
+		StartOffset:   h.options.StartOffset,
 		/*
 			GroupTopics:            nil,
 			Partition:              0,
 			Dialer:                 nil,
-			QueueCapacity:          0,
-			MinBytes:               0,
-			MaxBytes:               0,
 			MaxWait:                0,
 			ReadBatchTimeout:       0,
 			ReadLagInterval:        0,
@@ -81,11 +80,8 @@ func (h *Helper) subscribe(ctx context.Context, topic string) {
 			RebalanceTimeout:       0,
 			JoinGroupBackoff:       0,
 			RetentionTime:          0,
-			StartOffset:            0,
 			ReadBackoffMin:         0,
 			ReadBackoffMax:         0,
-			Logger:                 nil,
-			ErrorLogger:            nil,
 			IsolationLevel:         0,
 			MaxAttempts:            0,
 			OffsetOutOfRangeError:  false,
@@ -128,13 +124,15 @@ func (h *Helper) handle(ctx context.Context, msg kafka.Message) {
 		if err := json.Unmarshal(msg.Value, &data); err != nil {
 			logger.Errorf("could not decode kafka record. %s", err.Error())
 			return
-		} else {
-			err := in.SetData("", data)
-			if err != nil {
-				logger.Errorf("could set data from kafka record. %s", err.Error())
-				return
-			}
 		}
+
+		err := in.SetData("", data)
+		if err != nil {
+			logger.Errorf("could set data from kafka record. %s", err.Error())
+			return
+		}
+
+		// in.SetID(msg.)
 	}
 
 	var inouts []*cloudevents.InOut
@@ -147,6 +145,7 @@ func (h *Helper) handle(ctx context.Context, msg kafka.Message) {
 
 }
 
+/*
 type contextWithoutDeadline struct {
 	ctx context.Context
 }
@@ -158,3 +157,4 @@ func (*contextWithoutDeadline) Err() error                  { return nil }
 func (l *contextWithoutDeadline) Value(key interface{}) interface{} {
 	return l.ctx.Value(key)
 }
+*/
