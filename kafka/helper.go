@@ -94,22 +94,22 @@ func (h *Helper) subscribe(ctx context.Context, topic string) {
 		if err := sem.Acquire(ctx, 1); err != nil {
 			log.Errorf(err.Error())
 		}
-		go func(ctx context.Context) {
-			m, err := reader.ReadMessage(ctx)
-			if err != nil {
-				log.Errorf(err.Error())
-			}
-
-			bctx := log.FromContext(ctx).WithFields(
+		m, err := reader.ReadMessage(ctx)
+		if err != nil {
+			log.Errorf(err.Error())
+			continue
+		}
+		go func(ctx context.Context, m kafka.Message) {
+			ctx = log.FromContext(ctx).WithFields(
 				map[string]interface{}{
 					"kafka_partition": m.Partition,
 					"kafka_topic":     m.Topic,
 					"kafka_offset":    m.Offset,
 				},
 			).ToContext(ctx)
-			h.handle(bctx, m)
+			h.handle(ctx, m)
 			sem.Release(1)
-		}(ctx)
+		}(ctx, m)
 	}
 
 }
