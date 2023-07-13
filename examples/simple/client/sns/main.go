@@ -9,9 +9,9 @@ import (
 	iglog "github.com/americanas-go/ignite/americanas-go/log.v1"
 	igaws "github.com/americanas-go/ignite/aws/aws-sdk-go.v2"
 	"github.com/americanas-go/log"
+	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/sns"
-	"github.com/aws/aws-sdk-go/aws"
 )
 
 type Message struct {
@@ -27,7 +27,7 @@ func main() {
 
 	ctx := context.Background()
 
-	awsConfig := igaws.NewConfig(ctx)
+	awsConfig, _ := igaws.NewConfig(ctx)
 	// if you have already set aws credentials in your system environment variables,
 	// ignore the two lines below
 	awsConfig.Region = "YOUR_AWS_REGION"

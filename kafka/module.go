@@ -1,11 +1,10 @@
-package nats
+package kafka
 
 import (
 	"sync"
 
 	"github.com/americanas-go/faas/cloudevents"
 	"github.com/americanas-go/ignite/go.uber.org/fx.v1/module/context"
-	ginatsfx "github.com/americanas-go/ignite/go.uber.org/fx.v1/module/nats-io/nats.go.v1"
 	"go.uber.org/fx"
 )
 
@@ -22,7 +21,6 @@ func HelperModule(extraOptions fx.Option) fx.Option {
 		options = fx.Options(
 			context.Module(),
 			extraOptions,
-			ginatsfx.Module(),
 			cloudevents.HandlerWrapperModule(),
 			fx.Provide(
 				DefaultOptions,

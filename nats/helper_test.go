@@ -10,6 +10,7 @@ import (
 	"github.com/americanas-go/faas/cloudevents"
 	iglog "github.com/americanas-go/ignite/americanas-go/log.v1"
 	"github.com/americanas-go/ignite/nats-io/nats.go.v1"
+	n "github.com/nats-io/nats.go"
 
 	"github.com/stretchr/testify/suite"
 )
@@ -35,13 +36,13 @@ func (s *NatsHelperSuite) TestNatsNewHelper() {
 	sUrl := fmt.Sprintf("nats://127.0.0.1:%d", TestPort)
 	options, _ := nats.NewOptions()
 	options.Url = sUrl
-	subscriber, _ := nats.NewSubscriberWithOptions(ctx, options)
+	conn, _ := nats.NewConnWithOptions(ctx, options)
 
 	type args struct {
-		ctx        context.Context
-		subscriber *nats.Subscriber
-		options    *Options
-		handler    *cloudevents.HandlerWrapper
+		ctx     context.Context
+		conn    *n.Conn
+		options *Options
+		handler *cloudevents.HandlerWrapper
 	}
 	tests := []struct {
 		name string
@@ -51,17 +52,17 @@ func (s *NatsHelperSuite) TestNatsNewHelper() {
 		{
 			name: "success",
 			args: args{
-				ctx:        ctx,
-				subscriber: subscriber,
-				options:    defaultOptions,
-				handler:    nil,
+				ctx:     ctx,
+				conn:    conn,
+				options: defaultOptions,
+				handler: nil,
 			},
-			want: &Helper{nil, "changeme", []string{"changeme"}, subscriber},
+			want: &Helper{nil, "changeme", []string{"changeme"}, conn},
 		},
 	}
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
-			got := NewHelper(tt.args.ctx, tt.args.subscriber, tt.args.options, tt.args.handler)
+			got := NewHelper(tt.args.ctx, tt.args.conn, tt.args.options, tt.args.handler)
 			s.Assert().True(reflect.DeepEqual(got, tt.want), "NewHelper() = %v, want %v")
 		})
 	}
@@ -75,13 +76,13 @@ func (s *NatsHelperSuite) TestNatsNewDefaultHelper() {
 	sUrl := fmt.Sprintf("nats://127.0.0.1:%d", TestPort)
 	options, _ := nats.NewOptions()
 	options.Url = sUrl
-	subscriber, _ := nats.NewSubscriberWithOptions(ctx, options)
+	conn, _ := nats.NewConnWithOptions(ctx, options)
 
 	type args struct {
-		ctx        context.Context
-		subscriber *nats.Subscriber
-		options    *Options
-		handler    *cloudevents.HandlerWrapper
+		ctx     context.Context
+		conn    *n.Conn
+		options *Options
+		handler *cloudevents.HandlerWrapper
 	}
 	tests := []struct {
 		name string
@@ -91,17 +92,17 @@ func (s *NatsHelperSuite) TestNatsNewDefaultHelper() {
 		{
 			name: "success",
 			args: args{
-				ctx:        ctx,
-				subscriber: subscriber,
-				options:    defaultOptions,
-				handler:    nil,
+				ctx:     ctx,
+				conn:    conn,
+				options: defaultOptions,
+				handler: nil,
 			},
-			want: &Helper{nil, "changeme", []string{"changeme"}, subscriber},
+			want: &Helper{nil, "changeme", []string{"changeme"}, conn},
 		},
 	}
 	for _, tt := range tests {
 		s.Run(tt.name, func() {
-			got := NewDefaultHelper(tt.args.ctx, tt.args.subscriber, tt.args.handler)
+			got := NewDefaultHelper(tt.args.ctx, tt.args.conn, tt.args.handler)
 			s.Assert().True(reflect.DeepEqual(got, tt.want), "NewHelper() = %v, want %v")
 		})
 	}

@@ -9,6 +9,6 @@ import (
 
 // NewEvent returns an initialized NATS client that implements event repository.
 func NewEvent(ctx context.Context) repository.Event {
-	publisher, _ := ginats.NewPublisher(ctx)
-	return NewClient(publisher)
+	conn, _ := ginats.NewConn(ctx)
+	return NewClient(conn)
 }
