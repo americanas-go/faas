@@ -10,8 +10,8 @@ import (
 	"github.com/americanas-go/ignite/nats-io/nats.go.v1"
 	v2 "github.com/cloudevents/sdk-go/v2"
 
-	"github.com/nats-io/gnatsd/server"
-	natsserver "github.com/nats-io/nats-server/test"
+	"github.com/nats-io/nats-server/v2/server"
+	natsserver "github.com/nats-io/nats-server/v2/test"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -52,10 +52,10 @@ func TestSubscriberListenerSubscribe(t *testing.T) {
 
 	options.Url = sUrl
 
-	q, err := nats.NewSubscriberWithOptions(context.Background(), options)
+	conn, err := nats.NewConnWithOptions(context.Background(), options)
 	assert.Nil(t, err)
 
-	lis := NewSubscriberListener(q, nil, "subject", "queue")
+	lis := NewSubscriberListener(conn, nil, "subject", "queue")
 	subscribe, err := lis.Subscribe(context.Background())
 	assert.Nil(t, err)
 

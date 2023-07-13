@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/americanas-go/config v1.8.4
 	github.com/americanas-go/errors v1.1.1
-	github.com/americanas-go/ignite v1.4.4
+	github.com/americanas-go/ignite v1.8.2
 	github.com/americanas-go/log v1.8.8
 	github.com/americanas-go/utils v1.1.0
 	github.com/aws/aws-lambda-go v1.41.0
@@ -17,11 +17,10 @@ require (
 	github.com/cloudevents/sdk-go/v2 v2.14.0
 	github.com/google/uuid v1.3.0
 	github.com/matryer/try v0.0.0-20161228173917-9ac251b645a2
-	github.com/nats-io/gnatsd v1.4.1
-	github.com/nats-io/nats-server v1.4.1
+	github.com/nats-io/nats-server/v2 v2.9.19
 	github.com/nats-io/nats.go v1.27.1
 	github.com/newrelic/go-agent/v3 v3.23.1
-	github.com/segmentio/kafka-go v0.4.40
+	github.com/segmentio/kafka-go v0.4.42
 	github.com/spf13/cobra v1.7.0
 	github.com/stretchr/testify v1.8.4
 	go.uber.org/fx v1.20.0
@@ -29,7 +28,7 @@ require (
 )
 
 require (
-	github.com/aws/aws-sdk-go v1.44.295 // indirect
+	github.com/aws/aws-sdk-go v1.44.299 // indirect
 	github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.4.10 // indirect
 	github.com/aws/aws-sdk-go-v2/config v1.18.27 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.13.4 // indirect
@@ -55,13 +54,13 @@ require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/mattn/go-runewidth v0.0.14 // indirect
+	github.com/minio/highwayhash v1.0.2 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
-	github.com/nats-io/go-nats v1.7.2 // indirect
-	github.com/nats-io/nats-server/v2 v2.9.19 // indirect
+	github.com/nats-io/jwt/v2 v2.4.1 // indirect
 	github.com/nats-io/nkeys v0.4.4 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
@@ -77,12 +76,13 @@ require (
 	go.uber.org/dig v1.17.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.24.0 // indirect
-	golang.org/x/crypto v0.10.0 // indirect
-	golang.org/x/net v0.11.0 // indirect
+	golang.org/x/crypto v0.11.0 // indirect
+	golang.org/x/net v0.12.0 // indirect
 	golang.org/x/sys v0.10.0 // indirect
 	golang.org/x/text v0.11.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20230629202037-9506855d4529 // indirect
-	google.golang.org/grpc v1.56.1 // indirect
+	golang.org/x/time v0.3.0 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20230711160842-782d3b101e98 // indirect
+	google.golang.org/grpc v1.56.2 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

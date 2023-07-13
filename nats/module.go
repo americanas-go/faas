@@ -22,7 +22,7 @@ func HelperModule(extraOptions fx.Option) fx.Option {
 		options = fx.Options(
 			context.Module(),
 			extraOptions,
-			ginatsfx.SubscriberModule(),
+			ginatsfx.Module(),
 			cloudevents.HandlerWrapperModule(),
 			fx.Provide(
 				DefaultOptions,

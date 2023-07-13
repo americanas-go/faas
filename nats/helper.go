@@ -4,39 +4,39 @@ import (
 	"context"
 
 	"github.com/americanas-go/faas/cloudevents"
-	"github.com/americanas-go/ignite/nats-io/nats.go.v1"
 	"github.com/americanas-go/log"
+	"github.com/nats-io/nats.go"
 )
 
 // Helper assists in creating event handlers.
 type Helper struct {
-	handler    *cloudevents.HandlerWrapper
-	queue      string
-	subjects   []string
-	subscriber *nats.Subscriber
+	handler  *cloudevents.HandlerWrapper
+	queue    string
+	subjects []string
+	conn     *nats.Conn
 }
 
 // NewHelper returns a new Helper with options.
-func NewHelper(ctx context.Context, subscriber *nats.Subscriber, options *Options,
+func NewHelper(ctx context.Context, conn *nats.Conn, options *Options,
 	handler *cloudevents.HandlerWrapper) *Helper {
 
 	return &Helper{
-		handler:    handler,
-		queue:      options.Queue,
-		subjects:   options.Subjects,
-		subscriber: subscriber,
+		handler:  handler,
+		queue:    options.Queue,
+		subjects: options.Subjects,
+		conn:     conn,
 	}
 }
 
 // NewDefaultHelper returns a new Helper with default options.
-func NewDefaultHelper(ctx context.Context, subscriber *nats.Subscriber, handler *cloudevents.HandlerWrapper) *Helper {
+func NewDefaultHelper(ctx context.Context, conn *nats.Conn, handler *cloudevents.HandlerWrapper) *Helper {
 
 	opt, err := DefaultOptions()
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	return NewHelper(ctx, subscriber, opt, handler)
+	return NewHelper(ctx, conn, opt, handler)
 }
 
 func (h *Helper) Start() {
@@ -53,7 +53,7 @@ func (h *Helper) subscribe(ctx context.Context, subject string) {
 
 	logger := log.FromContext(ctx).WithTypeOf(*h)
 
-	subscriber := NewSubscriberListener(h.subscriber, h.handler, subject, h.queue)
+	subscriber := NewSubscriberListener(h.conn, h.handler, subject, h.queue)
 	subscribe, err := subscriber.Subscribe(ctx)
 	if err != nil {
 		logger.Error(err)

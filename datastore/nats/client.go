@@ -6,7 +6,6 @@ import (
 
 	"github.com/americanas-go/errors"
 	"github.com/americanas-go/faas/util"
-	ginats "github.com/americanas-go/ignite/nats-io/nats.go.v1"
 	"github.com/americanas-go/log"
 	v2 "github.com/cloudevents/sdk-go/v2"
 	"github.com/nats-io/nats.go"
@@ -14,12 +13,12 @@ import (
 
 // Client represents a NATS client that implements the event repository.
 type Client struct {
-	publisher *ginats.Publisher
+	conn *nats.Conn
 }
 
 // NewClient creates a new NATS client.
-func NewClient(publisher *ginats.Publisher) *Client {
-	return &Client{publisher: publisher}
+func NewClient(conn *nats.Conn) *Client {
+	return &Client{conn: conn}
 }
 
 // Publish publishes an event slice.
@@ -76,7 +75,7 @@ func (p *Client) Publish(ctx context.Context, outs []*v2.Event) (err error) {
 			Data:    rawMessage,
 		}
 
-		err = p.publisher.Publish(ctx, msg)
+		err = p.conn.PublishMsg(msg)
 		if err != nil {
 			err = errors.Wrap(err, errors.Internalf("unable to publish to nats"))
 			logger.Error(errors.ErrorStack(err))

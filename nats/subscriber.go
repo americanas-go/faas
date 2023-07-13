@@ -6,22 +6,21 @@ import (
 
 	"github.com/americanas-go/errors"
 	"github.com/americanas-go/faas/cloudevents"
-	"github.com/americanas-go/ignite/nats-io/nats.go.v1"
 	"github.com/americanas-go/log"
 	"github.com/cloudevents/sdk-go/v2/event"
-	n "github.com/nats-io/nats.go"
+	"github.com/nats-io/nats.go"
 )
 
 // SubscriberListener represents a subscriber listener.
 type SubscriberListener struct {
-	q       *nats.Subscriber
+	q       *nats.Conn
 	handler *cloudevents.HandlerWrapper
 	subject string
 	queue   string
 }
 
 // NewSubscriberListener returns a subscriber listener.
-func NewSubscriberListener(q *nats.Subscriber, handler *cloudevents.HandlerWrapper, subject string,
+func NewSubscriberListener(q *nats.Conn, handler *cloudevents.HandlerWrapper, subject string,
 	queue string) *SubscriberListener {
 	return &SubscriberListener{
 		q:       q,
@@ -32,11 +31,11 @@ func NewSubscriberListener(q *nats.Subscriber, handler *cloudevents.HandlerWrapp
 }
 
 // Subscribe subscribes to a particular subject in the listening subscriber's queue.
-func (l *SubscriberListener) Subscribe(ctx context.Context) (*n.Subscription, error) {
-	return l.q.Subscribe(l.subject, l.queue, l.h)
+func (l *SubscriberListener) Subscribe(ctx context.Context) (*nats.Subscription, error) {
+	return l.q.QueueSubscribe(l.subject, l.queue, l.h)
 }
 
-func (l *SubscriberListener) h(msg *n.Msg) {
+func (l *SubscriberListener) h(msg *nats.Msg) {
 
 	in := event.New()
 	err := json.Unmarshal(msg.Data, &in)
