@@ -9,6 +9,23 @@ The faas lets you write lightweight functions that run in different environments
 *   [AWS Lambda Functions](https://github.com/aws/aws-lambda-go)
 *   [Knative Eventing](https://github.com/knative/eventing)
 
+History
+------------
+
+This project started when we needed to use the lambda and it connected in several queues (sns, sqs, kinesis), and the format of the messages that arrived from the messenger was different in each technology.
+
+So we created a way to convert all messages to the cloudevents format (cloudevents.io) and receive this message in the handler.
+
+But we had a problem with testing our functions in a development environment, so in addition to our handler being a lambda, it should be a listener for nats (nats.io).
+
+Shortly thereafter, we started looking at knative eventing (knative.dev), so we grew the project to support knative eventing as well.
+
+And a little while ago we needed to create workers to connect to kafka and we added them too.
+
+In short, it's a way for you to run your function in many different environments. it could be a lambda, it could be a knative, it could be a listener for kafka and nats, but we made it pretty plug and play, so in the future we could, for example, support rabbitmq as well.
+
+All you need is to write your handler in a single format and configure what your handler will support, you can create supporting all and use the FAAS_CMD_DEFAULT config to specify which is the default implementation.
+
 Installation
 ------------
 
