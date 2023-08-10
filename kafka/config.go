@@ -17,6 +17,7 @@ const (
 	maxBytes         = root + ".maxBytes"
 	startOffset      = root + ".startOffset"
 	readBatchTimeout = root + ".readBatchTimeout"
+	maxWait          = root + ".maxWait"
 )
 
 func init() {
@@ -28,5 +29,6 @@ func init() {
 	config.Add(minBytes, 1, "defines batch min bytes")
 	config.Add(maxBytes, 10485760, "defines batch max bytes")
 	config.Add(readBatchTimeout, 2*time.Second, "defines read batch timeout")
+	config.Add(maxWait, 2*time.Second, "defines max wait")
 	config.Add(startOffset, kafka.LastOffset, "defines start offset LastOffset=-1, FirstOffset=-2")
 }

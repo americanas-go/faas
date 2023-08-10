@@ -16,6 +16,7 @@ type Options struct {
 	MaxBytes         int
 	StartOffset      int64
 	ReadBatchTimeout time.Duration
+	MaxWait          time.Duration
 }
 
 // DefaultOptions returns options based in config.

@@ -65,12 +65,11 @@ func (h *Helper) subscribe(ctx context.Context, topic string) {
 		MaxBytes:         h.options.MaxBytes,
 		StartOffset:      h.options.StartOffset,
 		ReadBatchTimeout: h.options.ReadBatchTimeout,
+		MaxWait:          h.options.MaxWait,
 		/*
 			GroupTopics:            nil,
 			Partition:              0,
 			Dialer:                 nil,
-			MaxWait:                0,
-			ReadBatchTimeout:       0,
 			ReadLagInterval:        0,
 			GroupBalancers:         nil,
 			HeartbeatInterval:      0,
