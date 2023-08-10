@@ -55,15 +55,16 @@ func (h *Helper) subscribe(ctx context.Context, topic string) {
 		WithField("groupId", h.options.GroupId).ToContext(ctx)
 
 	reader := kafka.NewReader(kafka.ReaderConfig{
-		Brokers:       h.options.Brokers,
-		GroupID:       h.options.GroupId,
-		Topic:         topic,
-		Logger:        &Logger{},
-		ErrorLogger:   &ErrorLogger{},
-		QueueCapacity: h.options.QueueCapacity,
-		MinBytes:      h.options.MinBytes,
-		MaxBytes:      h.options.MaxBytes,
-		StartOffset:   h.options.StartOffset,
+		Brokers:          h.options.Brokers,
+		GroupID:          h.options.GroupId,
+		Topic:            topic,
+		Logger:           &Logger{},
+		ErrorLogger:      &ErrorLogger{},
+		QueueCapacity:    h.options.QueueCapacity,
+		MinBytes:         h.options.MinBytes,
+		MaxBytes:         h.options.MaxBytes,
+		StartOffset:      h.options.StartOffset,
+		ReadBatchTimeout: h.options.ReadBatchTimeout,
 		/*
 			GroupTopics:            nil,
 			Partition:              0,
