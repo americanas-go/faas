@@ -15,6 +15,7 @@ import (
 type Helper struct {
 	handler *cloudevents.HandlerWrapper
 	options *Options
+	sem     *semaphore.Weighted
 }
 
 // NewHelper returns a new Helper with options.
@@ -24,6 +25,7 @@ func NewHelper(ctx context.Context, options *Options,
 	return &Helper{
 		handler: handler,
 		options: options,
+		sem:     semaphore.NewWeighted(int64(options.Concurrency)),
 	}
 }
 
@@ -89,16 +91,14 @@ func (h *Helper) subscribe(ctx context.Context, topic string) {
 		*/
 	})
 
-	var sem = semaphore.NewWeighted(int64(h.options.Concurrency))
-
 	for {
-		if err := sem.Acquire(ctx, 1); err != nil {
+		if err := h.sem.Acquire(ctx, 1); err != nil {
 			log.Errorf(err.Error())
 		}
 		m, err := reader.ReadMessage(ctx)
 		if err != nil {
 			log.Errorf(err.Error())
-			sem.Release(1)
+			h.sem.Release(1)
 			continue
 		}
 		go func(ctx context.Context, m kafka.Message) {
@@ -110,7 +110,7 @@ func (h *Helper) subscribe(ctx context.Context, topic string) {
 				},
 			).ToContext(ctx)
 			h.handle(ctx, m)
-			sem.Release(1)
+			h.sem.Release(1)
 		}(ctx, m)
 	}
 
