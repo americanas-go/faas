@@ -98,6 +98,7 @@ func (h *Helper) subscribe(ctx context.Context, topic string) {
 		m, err := reader.ReadMessage(ctx)
 		if err != nil {
 			log.Errorf(err.Error())
+			sem.Release(1)
 			continue
 		}
 		go func(ctx context.Context, m kafka.Message) {
