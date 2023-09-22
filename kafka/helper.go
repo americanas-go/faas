@@ -40,8 +40,9 @@ func NewDefaultHelper(ctx context.Context, handler *cloudevents.HandlerWrapper) 
 
 func (h *Helper) Start() {
 
-	for i := range h.options.Subjects {
-		go h.subscribe(context.Background(), h.options.Subjects[i])
+	for _, sub := range h.options.Subjects {
+		sub := sub
+		go h.subscribe(context.Background(), sub)
 	}
 
 	c := make(chan struct{})
