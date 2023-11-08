@@ -40,8 +40,9 @@ func NewDefaultHelper(ctx context.Context, handler *cloudevents.HandlerWrapper) 
 
 func (h *Helper) Start() {
 
-	for i := range h.options.Subjects {
-		go h.subscribe(context.Background(), h.options.Subjects[i])
+	for _, sub := range h.options.Subjects {
+		sub := sub
+		go h.subscribe(context.Background(), sub)
 	}
 
 	c := make(chan struct{})
@@ -55,21 +56,21 @@ func (h *Helper) subscribe(ctx context.Context, topic string) {
 		WithField("groupId", h.options.GroupId).ToContext(ctx)
 
 	reader := kafka.NewReader(kafka.ReaderConfig{
-		Brokers:       h.options.Brokers,
-		GroupID:       h.options.GroupId,
-		Topic:         topic,
-		Logger:        &Logger{},
-		ErrorLogger:   &ErrorLogger{},
-		QueueCapacity: h.options.QueueCapacity,
-		MinBytes:      h.options.MinBytes,
-		MaxBytes:      h.options.MaxBytes,
-		StartOffset:   h.options.StartOffset,
+		Brokers:          h.options.Brokers,
+		GroupID:          h.options.GroupId,
+		Topic:            topic,
+		Logger:           &Logger{},
+		ErrorLogger:      &ErrorLogger{},
+		QueueCapacity:    h.options.QueueCapacity,
+		MinBytes:         h.options.MinBytes,
+		MaxBytes:         h.options.MaxBytes,
+		StartOffset:      h.options.StartOffset,
+		ReadBatchTimeout: h.options.ReadBatchTimeout,
+		MaxWait:          h.options.MaxWait,
 		/*
 			GroupTopics:            nil,
 			Partition:              0,
 			Dialer:                 nil,
-			MaxWait:                0,
-			ReadBatchTimeout:       0,
 			ReadLagInterval:        0,
 			GroupBalancers:         nil,
 			HeartbeatInterval:      0,
@@ -88,8 +89,8 @@ func (h *Helper) subscribe(ctx context.Context, topic string) {
 		*/
 	})
 
-	var sem = semaphore.NewWeighted(int64(h.options.Concurrency))
-
+	sem := semaphore.NewWeighted(int64(h.options.Concurrency))
+	
 	for {
 		if err := sem.Acquire(ctx, 1); err != nil {
 			log.Errorf(err.Error())
@@ -97,6 +98,7 @@ func (h *Helper) subscribe(ctx context.Context, topic string) {
 		m, err := reader.ReadMessage(ctx)
 		if err != nil {
 			log.Errorf(err.Error())
+			sem.Release(1)
 			continue
 		}
 		go func(ctx context.Context, m kafka.Message) {

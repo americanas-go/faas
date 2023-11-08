@@ -2,18 +2,21 @@ package kafka
 
 import (
 	"github.com/americanas-go/config"
+	"time"
 )
 
 // Options can be used to create customized handler.
 type Options struct {
-	Brokers       []string
-	Subjects      []string
-	GroupId       string
-	Concurrency   int
-	QueueCapacity int
-	MinBytes      int
-	MaxBytes      int
-	StartOffset   int64
+	Brokers          []string
+	Subjects         []string
+	GroupId          string
+	Concurrency      int
+	QueueCapacity    int
+	MinBytes         int
+	MaxBytes         int
+	StartOffset      int64
+	ReadBatchTimeout time.Duration
+	MaxWait          time.Duration
 }
 
 // DefaultOptions returns options based in config.
