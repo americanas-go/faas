@@ -19,7 +19,7 @@ require (
 	github.com/cloudevents/sdk-go/v2 v2.14.0
 	github.com/google/uuid v1.4.0
 	github.com/matryer/try v0.0.0-20161228173917-9ac251b645a2
-	github.com/nats-io/nats-server/v2 v2.9.19
+	github.com/nats-io/nats-server/v2 v2.9.23
 	github.com/nats-io/nats.go v1.31.0
 	github.com/newrelic/go-agent/v3 v3.27.0
 	github.com/segmentio/kafka-go v0.4.44
@@ -63,7 +63,7 @@ require (
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
-	github.com/nats-io/jwt/v2 v2.4.1 // indirect
+	github.com/nats-io/jwt/v2 v2.5.0 // indirect
 	github.com/nats-io/nkeys v0.4.6 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
