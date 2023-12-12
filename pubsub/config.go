@@ -5,14 +5,17 @@ import (
 )
 
 const (
-	root         = "faas.pubsub"
-	projectid    = root + ".projectid"
-	subscription = root + ".subscription"
-	concurrency  = root + ".concurrency"
+	root                   = "faas.pubsub"
+	projectid              = root + ".projectid"
+	subscription           = root + ".subscription"
+	numgoroutines          = root + ".numgoroutines"
+	maxoutstandingmessages = root + ".maxoutstandingmessages"
 )
 
 func init() {
 	config.Add(projectid, "changeme", "pubsub project id")
 	config.Add(subscription, "changeme", "pubsub listener topics")
-	config.Add(concurrency, 10, "pubsub goroutine concurrency")
+	config.Add(numgoroutines, 16, "pubsub num go routines")
+	config.Add(maxoutstandingmessages, 8, "is the maximum number of unprocessed messages")
+
 }
