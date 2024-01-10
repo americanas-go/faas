@@ -41,11 +41,14 @@ func NewDefaultHelper(ctx context.Context, handler *cloudevents.HandlerWrapper) 
 func (h *Helper) Start() {
 	ctx := context.Background()
 	logger := log.FromContext(ctx)
-	pubsubClient, err := pubsub.NewClient(ctx, h.options.ProjectId)
+
+	pubsubClient, err := h.newPubSubClient(ctx)
 	if err != nil {
 		logger.Errorf("pubsub.NewClient: %s", err.Error())
 		//TODO handle error
 	}
+
+	defer pubsubClient.Close()
 
 	go h.run(ctx, pubsubClient)
 
@@ -56,9 +59,8 @@ func (h *Helper) Start() {
 func (h *Helper) run(ctx context.Context, pubsubClient *pubsub.Client) {
 	logger := log.FromContext(ctx)
 	sub := pubsubClient.Subscription(h.options.Subscription)
-	sub.ReceiveSettings.Synchronous = false
-	sub.ReceiveSettings.NumGoroutines = h.options.NumGoroutines
-	sub.ReceiveSettings.MaxOutstandingMessages = h.options.MaxOutstandingMessages
+	h.configureSubscription(sub)
+
 	err := sub.Receive(context.Background(), func(ctx context.Context, m *pubsub.Message) {
 
 		go func(ctx context.Context, m pubsub.Message) {
@@ -100,4 +102,14 @@ func (h *Helper) handle(ctx context.Context, msg pubsub.Message) {
 		logger.Error(errors.ErrorStack(err))
 	}
 
+}
+
+func (h *Helper) newPubSubClient(ctx context.Context) (*pubsub.Client, error) {
+	return pubsub.NewClient(ctx, h.options.ProjectId)
+}
+
+func (h *Helper) configureSubscription(sub *pubsub.Subscription) {
+	sub.ReceiveSettings.Synchronous = false
+	sub.ReceiveSettings.NumGoroutines = h.options.NumGoroutines
+	sub.ReceiveSettings.MaxOutstandingMessages = h.options.MaxOutstandingMessages
 }
