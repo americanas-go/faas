@@ -90,7 +90,7 @@ func (h *Helper) subscribe(ctx context.Context, topic string) {
 	})
 
 	sem := semaphore.NewWeighted(int64(h.options.Concurrency))
-	
+
 	for {
 		if err := sem.Acquire(ctx, 1); err != nil {
 			log.Errorf(err.Error())
@@ -102,6 +102,7 @@ func (h *Helper) subscribe(ctx context.Context, topic string) {
 			continue
 		}
 		go func(ctx context.Context, m kafka.Message) {
+			defer sem.Release(1)
 			ctx = log.FromContext(ctx).WithFields(
 				map[string]interface{}{
 					"kafka_partition": m.Partition,
@@ -110,7 +111,6 @@ func (h *Helper) subscribe(ctx context.Context, topic string) {
 				},
 			).ToContext(ctx)
 			h.handle(ctx, m)
-			sem.Release(1)
 		}(ctx, m)
 	}
 
