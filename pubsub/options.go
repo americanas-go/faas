@@ -6,9 +6,10 @@ import (
 
 // Options can be used to create customized handler.
 type Options struct {
-	ProjectId    string
-	Subscription string
-	Concurrency  int
+	ProjectId              string
+	Subscription           string
+	NumGoroutines          int
+	MaxOutstandingMessages int
 }
 
 // DefaultOptions returns options based in config.
