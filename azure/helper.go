@@ -59,72 +59,71 @@ func (h *Helper) Start() {
 }
 
 func (h *Helper) handle(w http.ResponseWriter, r *http.Request) {
-
 	ctx := r.Context()
-
 	logger := log.FromContext(ctx).WithTypeOf(*h)
-
 	if r.Method != "POST" {
 		WriteError(w, errors.MethodNotAllowedf("Method is not supported."))
 		return
 	}
 
-	body, err := io.ReadAll(r.Body)
+	in, err := h.parseRequest(r)
 	if err != nil {
-		WriteError(w, errors.BadRequestf("Bad request."))
+		WriteError(w, err)
 		return
 	}
 
+	inouts := make([]*cloudevents.InOut, 0)
+	inOut := &cloudevents.InOut{In: in}
+	inouts = append(inouts, inOut)
+
+	err = h.handler.Process(ctx, inouts)
+	if err != nil {
+		logger.Error(errors.ErrorStack(err))
+		WriteError(w, err)
+		return
+	}
+	h.processResponse(w, inOut)
+}
+
+func (h *Helper) parseRequest(r *http.Request) (*event.Event, error) {
 	in := event.New()
+
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		return nil, err
+	}
 
 	err = json.Unmarshal(body, &in)
 	if err != nil {
 		var data interface{}
 		if err := json.Unmarshal(body, &data); err != nil {
-			WriteError(w, errors.BadRequestf("Bad request."))
-			return
+			return nil, errors.BadRequestf("Bad request.")
 		}
-
 		err = in.SetData("application/json", data)
 		if err != nil {
-			WriteError(w, errors.Internalf("Internal error."))
-			return
+			return nil, errors.Internalf("Internal error.")
 		}
-
 	}
-
 	invocationID := r.Header.Get("X-Functions-InvocationId")
-
 	in.SetID(invocationID)
 	in.SetTime(time.Now())
+	return &in, nil
+}
 
-	var inouts []*cloudevents.InOut
-	inOut := &cloudevents.InOut{In: &in}
-
-	inouts = append(inouts, inOut)
-
-	if err := h.handler.Process(ctx, inouts); err != nil {
-		logger.Error(errors.ErrorStack(err))
-		WriteError(w, err)
-		return
-	}
-
+func (h *Helper) processResponse(w http.ResponseWriter, inOut *cloudevents.InOut) {
 	if inOut.Out != nil {
-
 		w.Header().Set("Content-Type", "application/json")
 		responseJson, err := json.Marshal(inOut.Out)
 		if err != nil {
 			WriteError(w, err)
 			return
 		}
-
 		_, err = w.Write(responseJson)
 		if err != nil {
 			WriteError(w, err)
 			return
 		}
 	}
-
 }
 
 type InvokeResponse struct {
