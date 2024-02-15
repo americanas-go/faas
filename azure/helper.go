@@ -9,7 +9,6 @@ import (
 	response "github.com/americanas-go/rest-response"
 	"github.com/cloudevents/sdk-go/v2/event"
 	"github.com/go-playground/validator/v10"
-	"io"
 	"net/http"
 	"os"
 	"strconv"
@@ -50,6 +49,8 @@ func (h *Helper) Start() {
 		listenAddr = val
 	}
 
+	log.Debugf("configuring azure function endpount in /api/%s", h.options.Name)
+
 	http.HandleFunc("/api/"+h.options.Name, h.handle)
 	err := http.ListenAndServe(":"+listenAddr, nil)
 	if err != nil {
@@ -61,6 +62,7 @@ func (h *Helper) Start() {
 func (h *Helper) handle(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	logger := log.FromContext(ctx).WithTypeOf(*h)
+
 	if r.Method != "POST" {
 		WriteError(w, errors.MethodNotAllowedf("Method is not supported."))
 		return
@@ -88,42 +90,81 @@ func (h *Helper) handle(w http.ResponseWriter, r *http.Request) {
 func (h *Helper) parseRequest(r *http.Request) (*event.Event, error) {
 	in := event.New()
 
-	body, err := io.ReadAll(r.Body)
-	if err != nil {
+	var invokeRequest InvokeRequest
+
+	d := json.NewDecoder(r.Body)
+	if err := d.Decode(&invokeRequest); err != nil {
+		log.Errorf(err.Error())
 		return nil, err
 	}
 
-	err = json.Unmarshal(body, &in)
+	var reqData map[string]interface{}
+	req := invokeRequest.Data["req"]
+	if err := json.Unmarshal(req, &reqData); err != nil {
+		log.Errorf(err.Error())
+		return nil, errors.BadRequestf(err.Error())
+	}
+
+	reqDataJson, _ := req.MarshalJSON()
+	log.Infof(string(reqDataJson))
+
+	err := json.Unmarshal(reqDataJson, &in)
 	if err != nil {
 		var data interface{}
-		if err := json.Unmarshal(body, &data); err != nil {
+		if err := json.Unmarshal(reqDataJson, &data); err != nil {
+			log.Errorf(err.Error())
 			return nil, errors.BadRequestf("Bad request.")
 		}
 		err = in.SetData("application/json", data)
 		if err != nil {
+			log.Errorf(err.Error())
 			return nil, errors.Internalf("Internal error.")
 		}
+		invocationID := r.Header.Get("X-Functions-InvocationId")
+		in.SetID(invocationID)
 	}
-	invocationID := r.Header.Get("X-Functions-InvocationId")
-	in.SetID(invocationID)
 	in.SetTime(time.Now())
 	return &in, nil
 }
 
 func (h *Helper) processResponse(w http.ResponseWriter, inOut *cloudevents.InOut) {
-	if inOut.Out != nil {
-		w.Header().Set("Content-Type", "application/json")
-		responseJson, err := json.Marshal(inOut.Out)
-		if err != nil {
-			WriteError(w, err)
-			return
-		}
-		_, err = w.Write(responseJson)
-		if err != nil {
-			WriteError(w, err)
-			return
-		}
+	if inOut.Out == nil {
+		return
 	}
+	w.Header().Set("Content-Type", "application/json")
+
+	msgJSON, err := json.Marshal(inOut.Out)
+	if err != nil {
+		log.Errorf(err.Error())
+		WriteError(w, err)
+		return
+	}
+
+	outputs := make(map[string]interface{})
+	outputs["message"] = inOut.Out
+
+	invokeResponse := InvokeResponse{outputs, nil, msgJSON}
+
+	respJSON, err := json.Marshal(invokeResponse)
+	if err != nil {
+		log.Errorf(err.Error())
+		WriteError(w, err)
+		return
+	}
+
+	log.Debugf(string(respJSON))
+
+	_, err = w.Write(respJSON)
+	if err != nil {
+		WriteError(w, err)
+		return
+	}
+
+}
+
+type InvokeRequest struct {
+	Data     map[string]json.RawMessage
+	Metadata map[string]interface{}
 }
 
 type InvokeResponse struct {

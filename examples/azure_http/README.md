@@ -9,5 +9,29 @@ curl -X POST -H "Content-Type: application/json" -d '{
     "subject": "changeme",
     "type": "changeme",
     "time": "0001-01-01T00:00:00Z"
-}' 'http://localhost:7071/api/MyQueueFunction'
+}' 'http://localhost:7071/api/handler'
 ```
+
+
+```shell
+curl -X POST -H "Content-Type: application/json" -d '{
+  "Data": {
+    "req": {
+      "Url": "http://localhost:7071/api/order",
+      "Method": "POST",
+      "Query": "{}",
+      "Headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "Params": {},
+      "Body": "{\"id\":1005,\"quantity\":2,\"color\":\"black\"}"
+    }
+  },
+  "Metadata": {
+  }
+}' 'http://localhost:7071/api/handler'
+```
+
+

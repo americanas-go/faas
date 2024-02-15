@@ -2,8 +2,6 @@ package main
 
 import (
 	"context"
-	"os"
-
 	"github.com/americanas-go/config"
 	"github.com/americanas-go/faas/cloudevents"
 	logger "github.com/americanas-go/faas/cloudevents/plugins/contrib/americanas-go/log.v1"
@@ -12,8 +10,16 @@ import (
 	ilog "github.com/americanas-go/ignite/americanas-go/log.v1"
 	igce "github.com/americanas-go/ignite/cloudevents/sdk-go.v2"
 	v2 "github.com/cloudevents/sdk-go/v2"
+	"github.com/google/uuid"
 	"go.uber.org/fx"
+	"os"
 )
+
+func init() {
+	// sets env var
+	os.Setenv("FAAS_CMD_DEFAULT", "azure")
+	os.Setenv("IGNITE_LOGRUS_CONSOLE_LEVEL", "TRACE")
+}
 
 func main() {
 
@@ -34,9 +40,6 @@ func main() {
 		),
 	)
 
-	// sets env var
-	os.Setenv("FAAS_CMD_DEFAULT", "azure")
-
 	// go run main.go help
 	err := cmd.Run(options,
 		cmd.NewAzure(),
@@ -54,8 +57,18 @@ func Handle(ctx context.Context, in v2.Event) (*v2.Event, error) {
 	e.SetSubject("changeme")
 	e.SetSource("changeme")
 	e.SetType("changeme")
+
+	randData := Message{
+		Random: uuid.NewString(),
+	}
+
 	e.SetExtension("partitionkey", "changeme")
-	err := e.SetData(v2.TextPlain, "changeme")
+
+	err := e.SetData("", randData)
 
 	return &e, err
+}
+
+type Message struct {
+	Random string
 }

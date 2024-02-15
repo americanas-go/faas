@@ -4,7 +4,7 @@
     "description": {
       "defaultExecutablePath": "main",
       "workingDirectory": "",
-      "arguments": ["azure", "--faas.azure.name", "MyQueueFunction"]
+      "arguments": ["azure", "--faas.azure.name", "faastestfunc"]
     },
     "enableForwardingHttpRequest": true
   }
