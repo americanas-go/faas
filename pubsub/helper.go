@@ -10,50 +10,45 @@ import (
 
 // Helper assists in creating event handlers.
 type Helper struct {
+	client  *pubsub.Client
 	handler *cloudevents.HandlerWrapper
 	options *Options
 }
 
 // NewHelper returns a new Helper with options.
-func NewHelper(ctx context.Context, options *Options,
+func NewHelper(ctx context.Context, client *pubsub.Client, options *Options,
 	handler *cloudevents.HandlerWrapper) *Helper {
 
 	return &Helper{
 		handler: handler,
 		options: options,
+		client:  client,
 	}
 }
 
 // NewDefaultHelper returns a new Helper with default options.
-func NewDefaultHelper(ctx context.Context, handler *cloudevents.HandlerWrapper) *Helper {
+func NewDefaultHelper(ctx context.Context, client *pubsub.Client, handler *cloudevents.HandlerWrapper) *Helper {
 
 	opt, err := DefaultOptions()
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	return NewHelper(ctx, opt, handler)
+	return NewHelper(ctx, client, opt, handler)
 }
 
 func (h *Helper) Start() {
-	ctx := context.Background()
-	logger := log.FromContext(ctx)
-	subscription := h.options.Subscription
-	pubsubClient, err := pubsub.NewClient(ctx, h.options.ProjectId)
-	if err != nil {
-		logger.Errorf("pubsub.NewClient: %w", err)
-		//TODO handle error
-	}
+	topic := h.options.Topic
 
-	go h.run(ctx, pubsubClient, subscription)
+	go h.run(context.Background(), topic)
 
 	c := make(chan struct{})
 	<-c
 }
 
-func (h *Helper) run(ctx context.Context, pubsubClient *pubsub.Client, subscriptionName string) {
+func (h *Helper) run(ctx context.Context, subscriptionName string) {
 	logger := log.FromContext(ctx)
-	sub := pubsubClient.Subscription(subscriptionName)
+	sub := h.client.Subscription(subscriptionName)
 	err := sub.Receive(context.Background(), func(ctx context.Context, m *pubsub.Message) {
 		log.Printf("Got message: %s", m.Data)
 		m.Ack()

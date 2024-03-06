@@ -6,15 +6,16 @@ import (
 )
 
 const (
-	root    = cloudevents.PluginsRoot + ".publisher"
-	enabled = root + ".enabled"
+	root           = cloudevents.PluginsRoot + ".publisher"
+	enabled        = root + ".enabled"
+	successEnabled = root + ".success.enabled"
+	errorEnabled   = root + ".error.enabled"
+	errorTopic     = root + ".error.topic"
 )
 
 func init() {
 	config.Add(enabled, true, "enable/disable publisher middleware")
-}
-
-// IsEnabled reports whether publisher middleware is enabled in the configuration.
-func IsEnabled() bool {
-	return config.Bool(enabled)
+	config.Add(successEnabled, false, "enable/disable success publisher middleware")
+	config.Add(errorEnabled, false, "enable/disable error publisher middleware")
+	config.Add(errorTopic, "changeme", "sets error topic publisher middleware")
 }

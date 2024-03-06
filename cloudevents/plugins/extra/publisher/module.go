@@ -20,6 +20,7 @@ func Module() fx.Option {
 		options = fx.Options(
 			provider.Module(),
 			fx.Provide(
+				NewOptions,
 				NewEventPublisher,
 			),
 		)
