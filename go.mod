@@ -8,7 +8,7 @@ require (
 	cloud.google.com/go/pubsub v1.36.2
 	github.com/americanas-go/config v1.8.5
 	github.com/americanas-go/errors v1.1.1
-	github.com/americanas-go/ignite v1.15.0
+	github.com/americanas-go/ignite v1.15.1
 	github.com/americanas-go/log v1.8.9
 	github.com/americanas-go/rest-response v1.0.7
 	github.com/americanas-go/utils v1.1.0
