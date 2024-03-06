@@ -5,10 +5,8 @@ import (
 	"os"
 
 	"github.com/americanas-go/config"
-	"github.com/americanas-go/faas/cloudevents"
 	logger "github.com/americanas-go/faas/cloudevents/plugins/contrib/americanas-go/log.v1"
 	"github.com/americanas-go/faas/cmd"
-	"github.com/americanas-go/faas/wrapper/provider"
 	ilog "github.com/americanas-go/ignite/americanas-go/log.v1"
 	igce "github.com/americanas-go/ignite/cloudevents/sdk-go.v2"
 	"github.com/americanas-go/log"
@@ -22,15 +20,10 @@ func main() {
 	ilog.New()
 
 	options := fx.Options(
-		provider.Module(),
+		logger.Module(),
 		fx.Provide(
 			func() igce.Handler {
 				return Handle
-			},
-			func(events *provider.EventWrapperProvider) []cloudevents.Middleware {
-				return []cloudevents.Middleware{
-					logger.NewLogger(),
-				}
 			},
 		),
 	)
