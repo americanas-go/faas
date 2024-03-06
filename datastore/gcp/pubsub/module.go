@@ -1,16 +1,16 @@
-package nats
+package pubsub
 
 import (
-	ginatsfx "github.com/americanas-go/ignite/go.uber.org/fx.v1/module/nats-io/nats.go.v1"
 	"sync"
 
+	pubsubfx "github.com/americanas-go/ignite/go.uber.org/fx.v1/module/cloud.google.com/pubsub.v1"
 	"github.com/americanas-go/ignite/go.uber.org/fx.v1/module/context"
 	"go.uber.org/fx"
 )
 
 var once sync.Once
 
-// Module loads the NATS module providing an initialized client.
+// Module loads the sns module providing an initialized client.
 //
 // The module is only loaded once.
 func Module() fx.Option {
@@ -19,7 +19,7 @@ func Module() fx.Option {
 	once.Do(func() {
 		options = fx.Options(
 			context.Module(),
-			ginatsfx.Module(),
+			pubsubfx.Module(),
 			fx.Provide(
 				NewEvent,
 			),
