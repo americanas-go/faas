@@ -8,7 +8,7 @@ require (
 	cloud.google.com/go/pubsub v1.36.2
 	github.com/americanas-go/config v1.8.5
 	github.com/americanas-go/errors v1.1.1
-	github.com/americanas-go/ignite v1.15.1
+	github.com/americanas-go/ignite v1.15.2
 	github.com/americanas-go/log v1.8.9
 	github.com/americanas-go/rest-response v1.0.7
 	github.com/americanas-go/utils v1.1.0
@@ -18,7 +18,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/kinesis v1.27.1
 	github.com/aws/aws-sdk-go-v2/service/sns v1.29.1
 	github.com/aws/aws-sdk-go-v2/service/sqs v1.31.1
-	github.com/cloudevents/sdk-go/v2 v2.15.1
+	github.com/cloudevents/sdk-go/v2 v2.15.2
 	github.com/go-playground/validator/v10 v10.19.0
 	github.com/google/uuid v1.6.0
 	github.com/matryer/try v0.0.0-20161228173917-9ac251b645a2
@@ -38,7 +38,7 @@ require (
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
 	cloud.google.com/go/iam v1.1.6 // indirect
 	github.com/americanas-go/health v1.0.0 // indirect
-	github.com/aws/aws-sdk-go v1.50.32 // indirect
+	github.com/aws/aws-sdk-go v1.50.33 // indirect
 	github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.6.1 // indirect
 	github.com/aws/aws-sdk-go-v2/config v1.27.6 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.15.2 // indirect
