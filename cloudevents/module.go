@@ -8,6 +8,11 @@ import (
 	"go.uber.org/fx"
 )
 
+type srvParams struct {
+	fx.In
+	Middlewares []Middleware `group:"_faas_middleware_"`
+}
+
 var handlerWrapperOnce sync.Once
 
 // HandlerWrapperModule returns fx module for initialization of event handler wrapped in middleware.
@@ -22,8 +27,9 @@ func HandlerWrapperModule() fx.Option {
 			contextfx.Module(),
 			fx.Provide(
 				DefaultHandlerWrapperOptions,
-				func(handler cloudevents.Handler, options *HandlerWrapperOptions, m []Middleware) *HandlerWrapper {
-					return NewHandlerWrapper(handler, options, m...)
+
+				func(handler cloudevents.Handler, options *HandlerWrapperOptions, m srvParams) *HandlerWrapper {
+					return NewHandlerWrapper(handler, options, m.Middlewares...)
 				},
 			),
 		)

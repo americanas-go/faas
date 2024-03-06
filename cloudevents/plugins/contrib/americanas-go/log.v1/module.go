@@ -1,10 +1,9 @@
-package publisher
+package log
 
 import (
 	"github.com/americanas-go/faas/cloudevents"
 	"sync"
 
-	"github.com/americanas-go/faas/wrapper/provider"
 	"go.uber.org/fx"
 )
 
@@ -19,13 +18,11 @@ func Module() fx.Option {
 
 	once.Do(func() {
 		options = fx.Options(
-			provider.Module(),
 			fx.Provide(
-				NewOptions,
 				fx.Annotated{
 					Group: "_faas_middleware_",
-					Target: func(options *Options, events *provider.EventWrapperProvider) cloudevents.Middleware {
-						return NewEventPublisher(options, events)
+					Target: func() cloudevents.Middleware {
+						return NewLogger()
 					},
 				},
 			),
