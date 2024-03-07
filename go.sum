@@ -24,8 +24,8 @@ github.com/americanas-go/errors v1.1.1 h1:2SZkpwPwvEfQz+rvBZRPKbw4JhndTGSaAgqcES
 github.com/americanas-go/errors v1.1.1/go.mod h1:hMayqj9yUESTubhsdfzcXmHuKvcNEMjr2AwCv1xTzRE=
 github.com/americanas-go/health v1.0.0 h1:pSWqKibs6zGd8TiMmh6bNn/aLTATgZXvztXJMlg3AsE=
 github.com/americanas-go/health v1.0.0/go.mod h1:eDOEGHqgQnw9vWMk1sJDCO/kD1x2lFkbUZtXmvLXHIo=
-github.com/americanas-go/ignite v1.15.2 h1:R4TOkEBN9mCr/yLI00wFImZotMncUqNyFAlbrTcjBt8=
-github.com/americanas-go/ignite v1.15.2/go.mod h1:L8ulwji24Z4LWqOtaCsa1M64RewPOIp3cM+HTaIuuiE=
+github.com/americanas-go/ignite v1.15.3 h1:vHwurkANyIQSprjpSFsxSIv7IuFmLE1F8ubRgXVCLhs=
+github.com/americanas-go/ignite v1.15.3/go.mod h1:pN9ZbstH6xsrgq+jXmW9g/sJf3GzwvG/WOm2tS7qgrs=
 github.com/americanas-go/log v1.8.9 h1:cJQtjAuvFN+tu3T9CsDF6nmwhlKob7FTUgfERaI32+8=
 github.com/americanas-go/log v1.8.9/go.mod h1:HIamF6kw4QGVhDEni4WuYhA1BzX1jUFBRXACAjbEShY=
 github.com/americanas-go/rest-response v1.0.7 h1:Z6StpbnFqADYGr4lQiaGVgpodbdlpC467ZVIb4wLMXM=
