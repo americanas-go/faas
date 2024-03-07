@@ -4,6 +4,7 @@ import (
 	"sync"
 
 	"github.com/americanas-go/faas/cloudevents"
+	pubsub "github.com/americanas-go/ignite/go.uber.org/fx.v1/module/cloud.google.com/pubsub.v1"
 	"github.com/americanas-go/ignite/go.uber.org/fx.v1/module/context"
 	"go.uber.org/fx"
 )
@@ -20,6 +21,7 @@ func HelperModule(extraOptions fx.Option) fx.Option {
 
 		options = fx.Options(
 			context.Module(),
+			pubsub.Module(),
 			extraOptions,
 			cloudevents.HandlerWrapperModule(),
 			fx.Provide(
